@@ -1,3 +1,3 @@
-const apiUrl = 'https://kitsu.io/api/edge/anime';
+const apiUrl = 'https://api.jikan.moe/v4';
 
 export { apiUrl };
