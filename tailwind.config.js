@@ -22,6 +22,7 @@ export default {
       },
       screens: {
         'cl-1': '480px',
+        'cl-2': '576px',
         lg: '994px',
         xl: '1200px'
       },
