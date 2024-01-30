@@ -2,3 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-down-enter {
+  animation: slideDown 0.5s forwards;
+}
+
+.scrollBarColor {
+  scrollbar-color: #ff9d00 #f1f1f1;
+  scrollbar-width: auto;
+}
+
+.mi-div::-webkit-scrollbar {
+  width: 9px;/* Ancho de la barra de desplazamiento */
+}
+
+.mi-div::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color del fondo de la barra de desplazamiento */
+}
+
+.mi-div::-webkit-scrollbar-thumb {
+  background: #ff9d00;
+  border-radius: 5px;
+}
+
