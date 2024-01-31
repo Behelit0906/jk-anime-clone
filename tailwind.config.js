@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -18,6 +19,12 @@ export default {
         },
         myOrange: {
           50: '#ff9d00'
+        },
+        dark: {
+          50: '#777EA7',
+          100: '#474c67',
+          150: '#303240',
+          200: '#212529'
         }
       },
       screens: {
