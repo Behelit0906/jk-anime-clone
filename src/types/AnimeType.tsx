@@ -1,34 +1,46 @@
 type AnimeType = {
-  id:number,
+  mal_id:number,
+  images: {
+    jpg:{
+      image_url:string,
+      small_image_url:string,
+      large_image_url:string
+    }
+  }
+  title:string,
+  title_english:string,
   type:string,
-  links: {
-    self:string
+  status: string,
+  airing:boolean,
+  aired: {
+    from: Date,
+    to: Date,
+    prop: {
+      from: {
+        day:number,
+        month: number,
+        year: number
+      },
+      to: {
+        day: number,
+        month: number,
+        year: number
+      }
+    },
   },
-  attributes: {
-    createdAt: Date,
-    updateAt: Date,
-    slug:string,
-    synopsis: string,
-    description:string,
-    coverImageTopOffset:number,
-    titles: {
-      en:string,
-      en_jp:string,
-      en_us:string,
-      ja_jp:string
-    },
-    canonicalTitle:string,
-    averageRating:number,
-    starDate: Date,
-    endDate: Date
-    status:string,
-    posterImage: {
-      tiny:string,
-      large:string
-    },
-    youtubeVideoId:string,
-    episodeCount:number,
-    showType:string
+  rank: number,
+  popularity: number,
+  synopsis: string,
+  genres: {
+    mail_id: number,
+    type: string,
+    name: string,
+  }[],
+  broadcast: {
+    day: string,
+    time: string,
+    timezone: string,
+    string: string,
   }
 }
 
