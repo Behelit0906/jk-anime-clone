@@ -46,11 +46,11 @@ function SearchBar() {
 
   return (
     <div className="relative flex items-center gap-2">
-      <article className="flex justify-between items-center gap-2 p-[15px] w-full lg:w-[204px] xl:w-[274px] h-12 bg-white rounded-[25px]">
-        <input onChange={changeHandler} value={text} className="w-full pl-3 lg:w-[135px] xl:w-[205px] placeholder-orange-300 text-orange-400 font-normal focus:outline-none" type="text" placeholder="Buscar Anime..." />
+      <article className="flex justify-between items-center gap-2 p-[15px] w-full lg:w-[204px] xl:w-[274px] h-12 bg-white dark:bg-dark-150 rounded-[25px]">
+        <input onChange={changeHandler} value={text} className="w-full pl-3 lg:w-[135px] xl:w-[205px] placeholder-orange-300 text-orange-400 font-normal focus:outline-none dark:bg-dark-150 dark:text-white dark:placeholder-white" type="text" placeholder="Buscar Anime..." />
         <IoSearchOutline className="text-xl scale-x-[-1] text-blue-50 hover:cursor-pointer" />
       </article>
-      <FaUserCircle className="hidden lg:block w-11 h-11 text-white bg-blue-50 hover:cursor-pointer" />
+      <FaUserCircle className="hidden lg:block w-11 h-11 text-white bg-blue-50 dark:bg-dark-200 hover:cursor-pointer" />
       {
         isLoading ? (
           <SearchList isLoading={isLoading} />
