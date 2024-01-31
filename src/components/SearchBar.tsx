@@ -14,7 +14,7 @@ function SearchBar() {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
 
-  const { data, isLoading} = useSWR(query ? `${apiUrl}?filter[text]=${query}&page[limit]=6&page[offset]=0` : null, fetcher, {
+  const { data, isLoading} = useSWR(query ? `${apiUrl}/anime?q=${query}&limit=6&page=1&swf&type=tv` : null, fetcher, {
     revalidateOnFocus: false, // No revalidamos en el foco para este caso
     shouldRetryOnError: false, // No re intentamos en error para este caso
     dedupingInterval: 60000, // Tiempo en ms para de duplicar peticiones
