@@ -32,7 +32,7 @@ function Header() {
   return (
     <header className="relative z-20 w-full flex justify-center bg-blue-50 dark:bg-dark-200">
       <div className="flex items-center justify-between w-[540px] md:w-[720px] lg:w-[960px] lg:gap-10 xl:w-[1170px] h-[73px] lg:h-[76px] px-[15px]">
-        <div className="shrink-0">
+        <div className="shrink-0 transition duration-300 hover:rotate-[-3deg]">
           <Icon />
         </div>
         <div className="flex items-center gap-1 lg:hidden">
