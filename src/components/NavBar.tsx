@@ -26,10 +26,10 @@ function NavBar(props:Props) {
           Hentai
         </a>
         <div className={socialMediaClasses}>
-          <a href="https://www.youtube.com/@JKanimeOficial" target="_blank" className="py-[5px] lg:py-[9px] px-[7px] rounded-[10px] bg-blue-100 dark:bg-dark-100 hover:bg-blue-150 transition-colors duration-300">
+          <a href="https://www.youtube.com/@JKanimeOficial" target="_blank" className="py-[5px] lg:py-[9px] px-[7px] rounded-[10px] bg-blue-100 hover:dark:bg-dark-50 dark:bg-dark-100 hover:bg-blue-150 transition-colors duration-300">
           <TfiYoutube className="text-white text-[37px]" />
           </a>
-          <a href="https://www.facebook.com/jkanimado" target="_blank" className="py-[5px] lg:py-[9px] px-[7px] rounded-[10px] bg-blue-100 dark:bg-dark-100 hover:bg-blue-150 transition-colors duration-300">
+          <a href="https://www.facebook.com/jkanimado" target="_blank" className="py-[5px] lg:py-[9px] px-[7px] rounded-[10px] bg-blue-100 dark:bg-dark-100 dark:hover:bg-dark-50 hover:bg-blue-150 transition-colors duration-300">
             <FaFacebookF className="text-white text-[37px]" />
           </a>
         </div>
