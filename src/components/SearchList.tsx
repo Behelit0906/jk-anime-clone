@@ -17,12 +17,12 @@ function SearchList(props: Props) {
           <ul>
             {
               props.animes.map(anime => 
-                <li key={anime.id}>
+                <li key={anime.mal_id}>
                   <SearchBarCard 
-                    cover={anime.attributes.posterImage.tiny} 
-                    showType={anime.attributes.showType} 
+                    cover={anime.images.jpg.image_url} 
+                    showType={anime.type} 
                     link="./">
-                    {anime.attributes.titles.en ? anime.attributes.titles.en : anime.attributes.titles.en_jp}
+                    {anime.title_english ? anime.title_english : anime.title}
                   </SearchBarCard>
                 </li>  
               )
