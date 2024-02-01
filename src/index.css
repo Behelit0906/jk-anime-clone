@@ -59,3 +59,17 @@ input:checked + .switch .right-circle {
   opacity: 0;
 }
 
+/* styles for SpecialCard */
+
+.bg-image {
+  transition: background-position 0.3s ease;
+}
+
+.special-card:hover .bg-image {
+  background-position: center;
+}
+
+.special-card:hover .play-icon {
+  opacity: 1;
+}
+
