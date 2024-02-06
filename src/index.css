@@ -73,3 +73,16 @@ input:checked + .switch .right-circle {
   opacity: 1;
 }
 
+/* styles for TopListCard */
+.score {
+  transition: ease-in-out 0.2s;
+}
+
+.topCard:hover .score {
+  height: 100%;
+}
+
+.topCard:hover .topCardContent  {
+  opacity: 1;
+}
+
