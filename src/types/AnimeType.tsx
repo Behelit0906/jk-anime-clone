@@ -42,6 +42,7 @@ type AnimeType = {
     timezone: string,
     string: string,
   }
+  score:number
 }
 
 export default AnimeType
