@@ -1,28 +1,23 @@
-import { useState, useEffect } from "react";
 import AnimeType from "../types/AnimeType";
-import { apiUrl } from "../constants";
-import { Link } from "react-router-dom";
 import SpecialCard from "./SpecialCard";
+import { useState, useEffect } from "react";
+import { apiUrl } from "../constants";
 
 function SpecialTable() {
   const [specials, setSpecials] = useState<AnimeType[]>([]);
 
-  function fetchSpecials(type:string) {
-    return fetch(`${apiUrl}/anime?type=${type}&limit=4&page=1&status=complete&order_by=end_date`)
-      .then(response => response.json());
-  }
-  
-  useEffect(()=> {
-    const types = ['ova', 'movie'];
-    const promiseArray = types.map(type => fetchSpecials(type)); 
+  useEffect(() => {
+    async function getSpecials() {
+      const ovas = await fetch(`${apiUrl}/anime?type=ova&limit=4&page=1&status=complete&order_by=end_date`).then(res => res.json())
+      const movies = await fetch(`${apiUrl}/anime?type=movie&limit=4&page=1&status=complete&order_by=end_date`).then(res => res.json())
 
-    Promise.all(promiseArray).then(results => {
-      const allSpecials = results.map(result => result.data).flat();
-      setSpecials(allSpecials);
-    }).catch(err => {
-      console.error("Error al cargar los especiales:", err);
-    }) 
-  },[])
+      setSpecials([...(ovas?.data || []), ...(movies?.data || [])]);
+    }
+    const id = setTimeout(getSpecials, 1000)
+
+    return () => clearTimeout(id);
+  }, [])
+
 
   return (
     <div className="hidden lg:flex lg:flex-col lg:gap-3 mt-3">
