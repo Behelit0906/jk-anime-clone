@@ -2,6 +2,7 @@ import AnimeType from "../types/AnimeType";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaWandMagicSparkles } from "react-icons/fa6";
+import { apiUrl } from "../constants";
 
 function ProgramList() {
   const [animes, setAnimes] =useState<AnimeType[]>([]);
@@ -21,11 +22,13 @@ function ProgramList() {
 
   useEffect(() => {
     const getAnimes = async () => {
-      const response = await fetch(`https://api.jikan.moe/v4/anime?status=airing&type=tv&order_by=start_date&sort=desc`);
+      const response = await fetch(`${apiUrl}/anime?status=airing&type=tv&order_by=start_date&sort=desc`);
       const data = await response.json();
       setAnimes(data.data);
     }
-    getAnimes();
+    const id = setTimeout(getAnimes, 0)
+    
+    return () => clearTimeout(id);
   }, []);
 
   useEffect(() => {
@@ -65,8 +68,8 @@ function ProgramList() {
       </div>
       <ul className="w-full overflow-y-auto h-[900px] rounded-[10px] bg-white dark:bg-dark-100 scrollBarColor mi-div">
       {
-        animes.map(anime => 
-          <li className="w-full min-h-[93px] hover:bg-[#E6E6E6] dark:hover:bg-[#303240] transition-colors duration-300" key={anime.mal_id}>
+        animes.map((anime, key) => 
+          <li className="w-full min-h-[93px] hover:bg-[#E6E6E6] dark:hover:bg-[#303240] transition-colors duration-300" key={key}>
             <Link className="flex gap-x-3 items-center py-[10px] px-[6px] h-fit border-b border-[#efefef] dark:border-[#303240]" to='/'>
               <div className="relative w-[114px] h-[73px] rounded-[10px] overflow-hidden shrink-0">
                 <img className="absolute left-0 top-[-55%] w-[110px] h-[155px]" src={anime.images.jpg.image_url} alt={anime.title} />
