@@ -52,8 +52,8 @@ function Carousel(props: Props) {
                   {item.title}
                 </h2>
                 <div className='flex items-center gap-1'>
-                  <Link to="/" className='w-[140px] tracking-[2px] text-center h-[50px] rounded-tl rounded-bl text-[13px] text-white font-mulish font-bold bg-myOrange-50 py-[14px] px-5'>
-                    VER AHORA
+                  <Link to="/" className='w-[145px] tracking-[2px] text-center h-[50px] rounded-tl rounded-bl text-[13px] text-white font-mulish font-bold bg-myOrange-50 py-[14px] px-5'>
+                    WATCH NOW
                   </Link>
                   <span className='flex flex-col justify-center items-center bg-myOrange-50 w-5 h-[50px] rounded-tr rounded-br'>
                     <FaAngleRight className='text-white' />
