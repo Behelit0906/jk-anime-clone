@@ -13,7 +13,7 @@ function CategoryTable() {
   
   return (
     <div className="w-full p-[15px] font-mulish text-[15px] font-bold">
-      <h3 className="pb-[5px] px-3 mb-[10px] text-[#1a2c37] border-b-[1px] border-[#56b8e9]">ANIME BY CATEGORY:</h3>
+      <h3 className="pb-[5px] px-3 mb-[10px] text-[#1a2c37] border-b-[1px] border-[#56b8e9] dark:text-white">ANIME BY CATEGORY:</h3>
       <ul className="flex flex-wrap text-white">
         {
           categories.map((category, key) => 
