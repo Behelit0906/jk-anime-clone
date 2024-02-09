@@ -2,7 +2,7 @@ import AnimeType from "../types/AnimeType";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaWandMagicSparkles } from "react-icons/fa6";
-import { apiUrl } from "../constants";
+import dataFetcher from "../utils/dataFetcher";
 
 function ProgramList() {
   const [animes, setAnimes] =useState<AnimeType[]>([]);
@@ -22,12 +22,12 @@ function ProgramList() {
 
   useEffect(() => {
     const getAnimes = async () => {
-      const response = await fetch(`${apiUrl}/anime?status=airing&type=tv&order_by=start_date&sort=desc`);
-      const data = await response.json();
-      setAnimes(data.data);
+      const response = await dataFetcher(['/anime?status=airing&type=tv&order_by=start_date&sort=desc'])
+      setAnimes(response);
     }
-    const id = setTimeout(getAnimes, 0)
-    
+
+    const id = setTimeout(getAnimes, 1000);
+
     return () => clearTimeout(id);
   }, []);
 
@@ -68,7 +68,7 @@ function ProgramList() {
       </div>
       <ul className="w-full overflow-y-auto h-[900px] rounded-[10px] bg-white dark:bg-dark-100 scrollBarColor mi-div">
       {
-        animes.map((anime, key) => 
+        animes.length > 0 && animes.map((anime, key) => 
           <li className="w-full min-h-[93px] hover:bg-[#E6E6E6] dark:hover:bg-[#303240] transition-colors duration-300" key={key}>
             <Link className="flex gap-x-3 items-center py-[10px] px-[6px] h-fit border-b border-[#efefef] dark:border-[#303240]" to='/'>
               <div className="relative w-[114px] h-[73px] rounded-[10px] overflow-hidden shrink-0">
