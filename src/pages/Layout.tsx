@@ -8,9 +8,9 @@ interface Props {
 
 function Layout(props:Props) {
   return (
-    <div className="flex flex-col items-center justify-between h-screen bg-[#F7F7F7]">
+    <div className="flex flex-col bg-[#F7F7F7] dark:bg-dark-150">
       <Header/>
-      <main>
+      <main className="flex flex-col items-center">
         {props.children}
       </main>
       <Footer />
