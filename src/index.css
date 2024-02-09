@@ -70,7 +70,7 @@ input:checked + .switch .right-circle {
 }
 
 .special-card:hover .play-icon {
-  opacity: 1;
+  opacity: 0.8;
 }
 
 /* styles for TopListCard */
