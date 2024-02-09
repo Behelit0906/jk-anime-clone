@@ -37,7 +37,7 @@ function Header() {
         </div>
         <div className="flex items-center gap-1 lg:hidden">
           <HamburgerButton onClick={onHamburgerClick} />
-          <FaUserCircle className="w-10 h-10 text-white bg-blue-50 hover:cursor-pointer" />
+          <FaUserCircle className="w-10 h-10 text-white bg-blue-50 hover:cursor-pointer dark:bg-dark-200" />
         </div>
         <AnimatePresence>
           {isMenuVisible && (
