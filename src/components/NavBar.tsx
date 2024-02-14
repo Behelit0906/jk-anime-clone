@@ -18,7 +18,7 @@ function NavBar(props:Props) {
         <SearchBar />
       </div>
       <div className="flex items-center flex-wrap lg:flex-nowrap justify-center gap-1 lg:gap-5 lg:mr-3">
-        <LinkComponent link="./" padding="p-[10px] lg:p-[15px]">Directory</LinkComponent>
+        <LinkComponent link="/directory" padding="p-[10px] lg:p-[15px]">Directory</LinkComponent>
         <LinkComponent link="./" padding="p-[10px] lg:p-[15px]">Schedules</LinkComponent>
         <LinkComponent link="./" padding="p-[10px] lg:p-[15px]">Top</LinkComponent>
         <a className="relative bg-white p-[10px] lg:p-[14px] rounded-[10px] text-[#c454d7] font-mulish hover:bg-gray-100 transition-colors duration-300 font-bold" href="./" target="_blank">
