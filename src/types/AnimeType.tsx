@@ -13,8 +13,8 @@ type AnimeType = {
   status: string,
   airing:boolean,
   aired: {
-    from: Date,
-    to: Date,
+    from: string
+    to: string
     prop: {
       from: {
         day:number,
