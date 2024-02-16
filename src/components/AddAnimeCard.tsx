@@ -17,7 +17,7 @@ function AddAnimeCard(props:Props) {
   else status = 'Finished'
 
   return (
-    <Link to='/' className="special-card block relative w-full h-full" >
+    <Link to={`/anime/details/${props.id}`} className="special-card block relative w-full h-full" >
       <div className="bg-image relative bg-image w-full h-[255px] rounded-lg overflow-hidden" style={{
       backgroundImage: `url('${props.image}')`,
       backgroundRepeat: 'no-repeat',

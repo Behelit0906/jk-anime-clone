@@ -5,7 +5,8 @@ interface Props {
   title:string,
   sinopsis:string,
   type:string,
-  status:string
+  status:string,
+  id: number
 }
 
 function DirectoryCard(props:Props) {
@@ -19,7 +20,7 @@ function DirectoryCard(props:Props) {
 
   return (
     <article className="w-[47%] lg:w-[31.5%] xl:w-[23.4%] bg-white shadow rounded-xl overflow-hidden dark:bg-dark-100">
-      <Link className="flex flex-col pb-3 md:pb-0 gap-y-3" to='./'>
+      <Link className="flex flex-col pb-3 md:pb-0 gap-y-3" to={`/anime/details/${props.id}`}>
         <div className="relative h-[250px]">
           <img className="w-full h-full" src={props.img} alt={props.title} />
         

@@ -140,7 +140,8 @@ function Directory() {
               sinopsis={anime.synopsis}
               status={anime.status}
               img={anime.images.jpg.image_url}
-              type={anime.type} />  
+              type={anime.type}
+              id={anime.mal_id} />  
             )
           }
         </div>
