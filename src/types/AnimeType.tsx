@@ -27,6 +27,7 @@ type AnimeType = {
         year: number
       }
     },
+    string: string
   },
   rank: number,
   popularity: number,
@@ -42,7 +43,14 @@ type AnimeType = {
     timezone: string,
     string: string,
   }
-  score:number
+  score:number,
+  studios: { 
+    mal_id: number,
+    type: string,
+    name: string 
+  }[],
+  episodes: number,
+  duration: string,
 }
 
 export default AnimeType
