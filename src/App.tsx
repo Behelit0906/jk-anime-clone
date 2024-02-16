@@ -1,5 +1,8 @@
 import {Routes , Route } from "react-router-dom" 
 import Home from "./pages/Home";
+import Directory from "./pages/Directory";
+import  Letter from "./pages/Letter";
+
 import { useEffect } from "react";
 
 const App = () => {
@@ -14,6 +17,8 @@ const App = () => {
       <>
         <Routes>
           <Route path="/" Component={Home} />
+          <Route path="/directory" Component={Directory} />
+          <Route path="/letter/:letter" Component={Letter} />
         </Routes>
       </>  
     )
