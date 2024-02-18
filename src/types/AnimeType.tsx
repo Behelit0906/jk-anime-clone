@@ -9,6 +9,7 @@ type AnimeType = {
   }
   title:string,
   title_english:string,
+  title_japanese: string,
   type:string,
   status: string,
   airing:boolean,
@@ -51,6 +52,12 @@ type AnimeType = {
   }[],
   episodes: number,
   duration: string,
+  trailer: {
+    youtube_id: string,
+    url: string,
+    embed_url: string
+  },
+  scored_by: number
 }
 
 export default AnimeType
