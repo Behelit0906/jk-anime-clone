@@ -2,6 +2,7 @@ import {Routes , Route } from "react-router-dom"
 import Home from "./pages/Home";
 import Directory from "./pages/Directory";
 import  Letter from "./pages/Letter";
+import AnimeDetails from "./pages/AnimeDetails";
 
 import { useEffect } from "react";
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/" Component={Home} />
           <Route path="/directory" Component={Directory} />
           <Route path="/letter/:letter" Component={Letter} />
+          <Route path="/anime/details/:id" Component={AnimeDetails} />
         </Routes>
       </>  
     )
