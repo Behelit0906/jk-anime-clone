@@ -37,6 +37,7 @@ function TopList() {
             title={topList[0].title}
             backgroundImage={topList[0].images.jpg.large_image_url}
             score={topList[0].score}
+            id={topList[0].mal_id}
             />
         
           </div>
@@ -55,6 +56,7 @@ function TopList() {
                       title={anime.title}
                       backgroundImage={anime.images.jpg.large_image_url}
                       score={anime.score}
+                      id={anime.mal_id}
                       />
                     )
                   }
@@ -77,6 +79,7 @@ function TopList() {
                         backgroundImage={anime.images.jpg.large_image_url}
                         fontSize="text-[10px]"
                         score={anime.score}
+                        id={anime.mal_id}
                         />
                       )
                     }
@@ -98,6 +101,7 @@ function TopList() {
                         backgroundImage={anime.images.jpg.large_image_url}
                         fontSize="text-[10px]"
                         score={anime.score}
+                        id={anime.mal_id}
                         />
                       )
                     }

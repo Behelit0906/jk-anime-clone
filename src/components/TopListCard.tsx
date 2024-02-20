@@ -11,12 +11,13 @@ interface Props {
   title: string
   marginBottom?:string
   score:number
+  id: number
 }
 
 function TopListCard(props:Props) {
   const articleClasses = `topCard relative block w-full ${props.height} ${props.marginBottom ? props.marginBottom : ''} rounded-[10px]`;
   return (
-    <Link to='/' className={articleClasses} style={{
+    <Link to={`/anime/details/${props.id}`} className={articleClasses} style={{
       backgroundImage: `url('${props.backgroundImage}')`,
       backgroundSize: 'cover'
     }}>
