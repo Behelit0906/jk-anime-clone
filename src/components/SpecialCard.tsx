@@ -11,7 +11,7 @@ interface Props {
 
 function SpecialCard(props:Props) {
   return(
-    <Link className="special-card block w-[130px] xl:w-[165px] h-[218px] overflow-hidden" to='/'>
+    <Link className="special-card block w-[130px] xl:w-[165px] h-[218px] overflow-hidden" to={`/anime/details/${props.id}`}>
       <div className="bg-image relative w-full h-[150px] rounded-lg overflow-hidden mb-1" style={{
         backgroundImage: `url('${props.image}')`, 
         backgroundSize: 'cover', 
