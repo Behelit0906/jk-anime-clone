@@ -21,7 +21,7 @@ function SearchList(props: Props) {
                   <SearchBarCard 
                     cover={anime.images.jpg.image_url} 
                     showType={anime.type} 
-                    link="./">
+                    link={`/anime/details/${anime.mal_id}`}>
                     {anime.title_english ? anime.title_english : anime.title}
                   </SearchBarCard>
                 </li>  
