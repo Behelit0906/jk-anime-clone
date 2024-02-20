@@ -7,7 +7,7 @@ function LetterTable() {
       {
         alphabet.map((letter, key) => 
           <li key={key}>
-            <Link className="flex items-center justify-center w-[29px] h-[46px] hover:bg-white hover:text-[#666]" to="./">
+            <Link className="flex items-center justify-center w-[29px] h-[46px] hover:bg-white hover:text-[#666]" to={`/letter/${letter}`}>
               {letter}
             </Link>
           </li>  
