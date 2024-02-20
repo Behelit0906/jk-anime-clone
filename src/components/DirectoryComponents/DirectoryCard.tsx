@@ -12,11 +12,19 @@ interface Props {
 function DirectoryCard(props:Props) {
 
   let status = '';
-  if(props.status === 'Not yet aired') status = 'Upcoming';
-  else if(props.status === 'Currently Airing') status = 'Airing'
-  else status = 'Finished'
-
-  
+  let statusColor = ''
+  if(props.status === 'Not yet aired') {
+    status = 'Upcoming';
+    statusColor = 'bg-myOrange-50'
+  }
+  else if(props.status === 'Currently Airing') {
+    status = 'Airing';
+    statusColor = 'bg-[#4CAF50]';
+  }
+  else {
+    status = 'Finished';
+    statusColor = 'bg-[#e4493e]';
+  }
 
   return (
     <article className="w-[47%] lg:w-[31.5%] xl:w-[23.4%] bg-white shadow rounded-xl overflow-hidden dark:bg-dark-100">
@@ -30,7 +38,7 @@ function DirectoryCard(props:Props) {
             {props.title}
           </h5>
           <div className="flex gap-3 text-[10px] text-white mb-3">
-            <span className="p-2 bg-[#4CAF50] rounded">{status}</span>
+            <span className={`p-2 ${statusColor} rounded`}>{status}</span>
             <span className="p-2 bg-[#4da8e2] rounded">{props.type}</span>
           </div>
           <p className="text-xs font-mulish max-h-[125px] overflow-y-scroll dark:text-white">
