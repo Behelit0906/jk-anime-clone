@@ -14,7 +14,7 @@ function NavBar(props:Props) {
   
   return (
     <div className={classes}>
-      <div className="w-full ml-4 xl:ml-0">
+      <div className="w-full">
         <SearchBar />
       </div>
       <div className="flex items-center flex-wrap lg:flex-nowrap justify-center gap-1 lg:gap-5 lg:mr-3">
