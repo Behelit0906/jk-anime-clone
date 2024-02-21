@@ -9,7 +9,7 @@ interface Props {
 }
 
 function NavBar(props:Props) {
-  const classes = props.mobile ? 'w-full flex flex-col items-center gap-y-[11px] lg:hidden' : 'hidden w-full lg:flex flex-row-reverse items-center';
+  const classes = props.mobile ? 'w-full flex flex-col px-[15px] items-center gap-y-[11px] lg:hidden' : 'hidden w-full lg:flex flex-row-reverse items-center';
   const socialMediaClasses = props.mobile ? 'flex lg:hidden gap-1' : 'hidden xl:flex xl:gap-1';
   
   return (
