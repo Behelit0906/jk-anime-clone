@@ -5,9 +5,11 @@ import HamburgerButton from "./HamburgerButton";
 import Icon from "./Icon";
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaUserCircle } from "react-icons/fa";  
+import { useLocation } from 'react-router-dom';
 
 function Header() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const location = useLocation();
 
   function clickHandler(e: React.MouseEvent<HTMLDivElement>) {
     if(e.target === e.currentTarget){
@@ -29,6 +31,10 @@ function Header() {
 
     return () => window.removeEventListener("resize", resizeHandler);
   }, [])
+
+  useEffect(() => {
+    setIsMenuVisible(false);
+  }, [location.pathname])
 
 
   return (
