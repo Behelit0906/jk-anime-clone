@@ -9,8 +9,10 @@ import { FaUserCircle } from "react-icons/fa";
 function Header() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
-  function clickHandler() {
-    setIsMenuVisible(prevState => !prevState)
+  function clickHandler(e: React.MouseEvent<HTMLDivElement>) {
+    if(e.target === e.currentTarget){
+      setIsMenuVisible(prevState => !prevState)
+    }
   }
 
   function onHamburgerClick() {
@@ -41,19 +43,20 @@ function Header() {
         </div>
         <AnimatePresence>
           {isMenuVisible && (
-            <motion.div 
+            <motion.div
+            id="background"
             className="absolute top-0 left-0 w-screen h-screen"
             initial={{backgroundColor: "rgba(0,0,0,0)"}}
             animate={{backgroundColor:"rgba(34,34,34,0.6)"}}
             exit={{backgroundColor: "rgba(0,0,0,0)"}}
-            transition={{duration: 0.3, ease:"easeInOut"}}>
-               <motion.div 
-                className="absolute top-0 left-0 w-screen h-screen"
+            transition={{duration: 0.3, ease:"easeInOut"}}
+            onClick={clickHandler}>
+               <motion.div
+                className="absolute z-20 top-0 left-0 w-[80%] h-screen"
                 initial={{ x: "-100%" }}
                 animate={{ x: "0%" }}
                 exit={{ x: "-100%" }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                onClick={clickHandler}
                 >
                 <MobileNavBar />
               </motion.div>
