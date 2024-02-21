@@ -147,7 +147,7 @@ function AnimeDetails() {
           <div className="hidden" ref={characterTable}>
             {
               characters ?  
-              <ul className="flex flex-wrap justify-between lg:justify-start lg:gap-6 xl:gap-[30px] font-mulish">
+              <ul className="flex flex-wrap gap-y-6 justify-between lg:justify-start lg:gap-6 xl:gap-[30px] font-mulish">
                 {
                   characters.map((character, key) => 
                   <li key={key} className="relative w-[47%] lg:w-[23%] mb-5">
