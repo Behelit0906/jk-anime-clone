@@ -1,4 +1,4 @@
-import {Routes , Route } from "react-router-dom" 
+import {Routes , Route, Navigate } from "react-router-dom" 
 import Home from "./pages/Home";
 import Directory from "./pages/Directory";
 import  Letter from "./pages/Letter";
@@ -23,6 +23,7 @@ const App = () => {
           <Route path="/letter/:letter" Component={Letter} />
           <Route path="/genre/:id" Component={Genre} />
           <Route path="/anime/details/:id" Component={AnimeDetails} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </>  
     )
