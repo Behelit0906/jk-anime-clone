@@ -4,13 +4,11 @@ import { Link } from "react-router-dom";
 import CategoryTable from "./CategoryTable";
 
 function MobileNavBar() {
-  const stopClickPropagation = (event: React.MouseEvent) => {
-    event.stopPropagation();
-  };
+  
   return (
-    <nav onClick={stopClickPropagation} className="top-0 left-0 flex flex-col items-center w-[77%] h-screen pt-2 pb-10 px-4 max-w-[760px] overflow-y-scroll bg-blue-50 dark:bg-dark-200">
+    <nav className="top-0 left-0 flex flex-col items-center w-full h-screen pt-2 pb-10 overflow-y-scroll bg-blue-50 dark:bg-dark-200">
       <NavBar mobile={true} />
-      <div className="mt-5 pl-3"> 
+      <div className="mt-5 px-[15px]"> 
         <LetterTable />
       </div>
       <div className="w-full p-[15px] font-mulish text-[15px] font-bold">
