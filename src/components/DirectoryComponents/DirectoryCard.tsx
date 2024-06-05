@@ -41,7 +41,7 @@ function DirectoryCard(props:Props) {
             <span className={`p-2 ${statusColor} rounded`}>{status}</span>
             <span className="p-2 bg-[#4da8e2] rounded">{props.type}</span>
           </div>
-          <p className="text-xs font-mulish max-h-[125px] overflow-y-scroll dark:text-white">
+          <p className="text-xs font-mulish max-h-[125px] overflow-y-scroll dark:text-white directory-card-scroll-bar directory-card-scroll-bar-firefox">
             {props.sinopsis}
           </p>
         </div>

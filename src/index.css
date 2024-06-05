@@ -35,6 +35,19 @@
   border-radius: 5px;
 }
 
+.directory-card-scroll-bar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.directory-card-scroll-bar::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 5px;
+}
+
+.directory-card-scroll-bar-firefox {
+  scrollbar-width: auto;
+}
+
 input:checked + .switch {
   background-color: #35A9E2;
 } 
