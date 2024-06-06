@@ -10,21 +10,30 @@ function Home() {
 
   const items = [
     {
-      title: 'Mashle 2nd Season', 
-      img: 'https://cdn.jkdesu.com/assets/images/animes/video/image/jkvideo_e94f904c7a702700051e07fa2ade68c3.jpg'
+      title: 'Kimetsu no Yaiba: Hashira Geiko-hen', 
+      img: 'https://cdn.jkdesu.com/assets/images/animes/video/image/jkvideo_1756de8854c866aaf9e81db33a15028e.jpg',
+      id: 55701
     },
     {
-      title: 'Nanatsu no Taizai: Mokushiroku no Yonkishi',
-      img: 'https://cdn.jkdesu.com/assets/images/animes/video/image/jkvideo_9d8b3d66363db0f99f4cc366f75c29dd.jpg'
+      title: 'Tensei Kizoku, Kantei Skill de Nariagaru',
+      img: 'https://cdn.jkdesu.com/assets/images/animes/video/image/jkvideo_01a1d82b10e85a4b723e0707458244f4.jpg',
+      id: 55265
     },
     {
-      title: 'Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e 3rd Season',
-      img: 'https://cdn.jkdesu.com/assets/images/animes/video/image/jkvideo_b9a554d1f1f254184104c38aaf1cebe0.jpg'
+      title: 'Kaijuu 8-gou',
+      img: 'https://cdn.jkdesu.com/assets/images/animes/video/image/jkvideo_aadb192a01447c8bcc3b4c1a46d3bd82.jpg',
+      id: 52588
     },
     {
-      title: 'Ore dake Level Up na Ken',
-      img: 'https://cdn.jkdesu.com/assets/images/animes/video/image/jkvideo_872a0592f5d9338d0ef888235dd28edc.jpg'
-    }
+      title: 'Tensei shitara Slime Datta Ken 3rd Season',
+      img: 'https://cdn.jkdesu.com/assets/images/animes/video/image/jkvideo_7dfb632a3a55951b44533f5a5f52b8ab.jpg',
+      id: 53580
+    },
+    {
+      title: 'Wind Breaker',
+      img: 'https://cdn.jkdesu.com/assets/images/animes/video/image/jkvideo_391366c601403242ffb745d069287fae.jpg',
+      id: 54900
+    },
   ]
   return (
     <Layout>
