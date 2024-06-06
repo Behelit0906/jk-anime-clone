@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa";
 
 interface Props {
-  items: { title: string, img: string }[]
+  items: { title: string, img: string, id: number }[]
 }
 
 function Carousel(props: Props) {
@@ -52,7 +52,7 @@ function Carousel(props: Props) {
                   {item.title}
                 </h2>
                 <div className='flex items-center gap-1'>
-                  <Link to="/" className='w-[145px] tracking-[2px] text-center h-[50px] rounded-tl rounded-bl text-[13px] text-white font-mulish font-bold bg-myOrange-50 py-[14px] px-5'>
+                  <Link to={`/anime/details/${item.id}`} className='w-[145px] tracking-[2px] text-center h-[50px] rounded-tl rounded-bl text-[13px] text-white font-mulish font-bold bg-myOrange-50 py-[14px] px-5'>
                     WATCH NOW
                   </Link>
                   <span className='flex flex-col justify-center items-center bg-myOrange-50 w-5 h-[50px] rounded-tr rounded-br'>
