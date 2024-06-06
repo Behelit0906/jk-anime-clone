@@ -77,7 +77,7 @@ function ProgramList() {
               <div className="flex justify-between w-full h-fit pr-3">
                 <div className="flex flex-col gap-1 font-mulish text-[13px]">
                   <h5 className="font-bold text-[#323232] dark:text-white">{anime.title}</h5>
-                  <h6 className="text-myOrange-50 font-semibold">Episode 5</h6>
+                  <h6 className="text-myOrange-50 font-semibold">Episode {Math.ceil( anime.episodes ? Math.random() * anime.episodes : 12)}</h6>
                 </div>
                 <div className="flex items-center shrink-0">
                   <img src="https://cdn.jkdesu.com/assets2/css/img/flecha.png" />
