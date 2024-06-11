@@ -1,49 +1,52 @@
 import Layout from "./Layout";
 import { FaHome } from "react-icons/fa";
 import DirectoryFilter from "../components/DirectoryComponents/DirectoryFilter";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { genres, types, apiUrl } from "../constants";
 import AnimeType from "../types/AnimeType";
 import DirectoryCard from "../components/DirectoryComponents/DirectoryCard";
-
-
+import { useNavigate } from 'react-router-dom';
+import useExtractUrlQueries from "../utils/extractUrlQueries";
+import useSWR from 'swr';
+import { FaFilter } from "react-icons/fa";
 
 function Directory() {
-  const [orderBy, setOrderBy] = useState('title');
-  const [sort, setSort] = useState('desc');
-  const [genre, setGenre] = useState(1);
-  const [type, setType] = useState('');
-  const [status, setStatus] = useState('airing');
-  const [year, setYear] = useState(new Date().getUTCFullYear());
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [animes, setAnimes] = useState<AnimeType[]>([]);
+  const navigate = useNavigate();
+  const queries = useExtractUrlQueries();
+  const [order, setOrder] = useState(queries.order);
+  const [sortingCriteria, setSortingCriteria] = useState(queries.sortingCriteria);
+  const [genre, setGenre] = useState<{id:string|number, urlName:string}>({id: queries.genre.mal_id, urlName: queries.genre.urlName})
+  const [type, setType] = useState({id: queries.type.id, urlName: queries.type.urlName});
+  const [status, setStatus] = useState(queries.status);
+  const [year, setYear] = useState(queries.year);
+  const [page, setPage] = useState(queries.page);
 
   const years: number[] = [];
   for (let i = new Date().getUTCFullYear(); i >= 1981; i--) {
     years.push(i);
   }
 
+  
   function selectHandler(e: React.ChangeEvent<HTMLSelectElement>) {
     switch (e.target.name) {
-      case 'byOrder':
-        if(e.target.value === orderBy) return;
-        setOrderBy(e.target.value);
+      case 'order':
+        if(e.target.value === order) return;
+        setOrder(e.target.value);
         break;
 
-      case 'sort':
-        if(e.target.value === sort) return;
-        setSort(e.target.value);
+      case 'sortingCriteria':
+        if(e.target.value === sortingCriteria) return;
+        setSortingCriteria(e.target.value);
         break;
 
       case 'genre':
-        if(Number(e.target.value) === genre) return;
-        setGenre(Number(e.target.value));
+        if(e.target.value === genre.id) return; 
+        setGenre({id: e.target.value.split('|')[0], urlName: e.target.value.split('|')[1] });
         break;
 
       case 'type':
-        if(e.target.value === type) return;
-        setType(e.target.value);
+        if(e.target.value === type.id) return;
+        setType({id: e.target.value.split('|')[0], urlName: e.target.value.split('|')[1] });
         break;
 
       case 'status':
@@ -58,28 +61,29 @@ function Directory() {
     }
   }
 
-  function clickHandler(e:React.MouseEvent<HTMLButtonElement>) {
-    if(e.currentTarget.name === 'previousButton') setPage(page - 1);
-    else setPage(page + 1);
+  function filterButtonHandler() {
+    navigate(`/directory?genre=${genre.urlName}&type=${type.urlName}&status=${status}&year=${year}&sorting_criteria=${sortingCriteria}&order=${order}&page=1`)
   }
 
-  useEffect(() => {
-    async function getAnimes() {
-      const response = await fetch(`${apiUrl}/anime?genres=${genre}&type=${type}&status=${status}${year !== 0 ? `&start_date=${year}-01-01` : ''}&limit=24&page=${page}`).then(res => res.json());
-
-      if(response){
-        setAnimes(response.data);
-        setTotalPages(response.pagination.last_visible_page);
-      } 
-      else {
-        setAnimes([]);
-        setTotalPages(0)
-      } 
+  function clickHandler(e:React.MouseEvent<HTMLButtonElement>) {
+    if(e.currentTarget.name === 'previousButton' && page > 1) {
+      const temp = page;
+      setPage(temp - 1);
+      navigate(`/directory?genre=${genre.urlName}&type=${type.urlName}&status=${status}&year=${year}&sorting_criteria=${sortingCriteria}&order=${order}&page=${temp - 1}`)
+    }
+    else if(page < totalPages) {
+      const temp = page;
+      setPage(temp + 1);
+      navigate(`/directory?genre=${genre.urlName}&type=${type.urlName}&status=${status}&year=${year}&sorting_criteria=${sortingCriteria}&order=${order}&page=${page + 1}`)
     }
 
-    getAnimes();
-  }, [genre, status, type, year, page]);
+  }
 
+  const { data } = useSWR(`${apiUrl}/anime?genres=${queries.genre.mal_id}&type=${queries.type.id}&status=${queries.status}${queries.year !== 0 ? `&start_date=${queries.year}-01-01` : ''}&limit=24&page=${queries.page}&order_by=${queries.sortingCriteria}&sort=${queries.order}`);
+
+  const animes:AnimeType[] = data?.data || null;
+
+  const totalPages = data?.pagination?.last_visible_page;
 
   return (
     <Layout>
@@ -90,27 +94,28 @@ function Directory() {
         <div className="mb-5">
           <DirectoryFilter />
           <div className="flex gap-1 flex-wrap mt-10">
-            <select onChange={selectHandler} name="orderBy" className="p-3 w-24 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
+            <select onChange={selectHandler} name="sortingCriteria" value={sortingCriteria} className="p-3 w-24 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
               <option value="start_date">By date</option>
               <option value="title">By name</option>
+              <option value="popularity">Popularity</option>
             </select>
-            <select onChange={selectHandler} name="sort" className="p-3 w-26 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
+            <select onChange={selectHandler} value={order} name="order" className="p-3 w-26 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
               <option value="desc">Descending</option>
               <option value="asc">Ascending</option>
             </select>
-            <select onChange={selectHandler} name="genre" className="p-3 w-24 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
-              <option value="">Genre</option>
+            <select onChange={selectHandler} value={`${genre.id}|${genre.urlName}`} name="genre" className="p-3 w-24 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
+              <option value="|">Genre</option>
               {
                 genres.map(genre => 
-                  <option key={genre.mal_id} value={genre.mal_id}>{genre.name}</option>  
+                  <option key={genre.mal_id} value={`${genre.mal_id}|${genre.urlName}`}>{genre.name}</option>  
                 )
               }
             </select>
-            <select onChange={selectHandler} name="type" className="p-3 w-24 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
-              <option value="">Type</option>
+            <select onChange={selectHandler} value={`${type.id}|${type.urlName}`} name="type" className="p-3 w-24 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
+              <option value="|">Type</option>
               {
-                types.map(types => 
-                  <option key={types.id} value={types.id}>{types.name}</option>  
+                types.map(type => 
+                  <option key={type.id} value={`${type.id}|${type.urlName}`}>{type.name}</option>  
                 )
               }
             </select>
@@ -120,15 +125,18 @@ function Directory() {
               <option value="complete">Finished</option>
               <option value="upcoming">Upcoming</option>
             </select>
-            <select onChange={selectHandler} name="year" className="p-3 w-26 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
-              <option value={0}>Year</option>
+            <select onChange={selectHandler} size={1} name="year" value={year} className="p-3 w-26 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
+              <option value="">Year</option>
               {
                 years.map(year => 
                   <option key={year} value={year}>{year}</option>  
                 )
               }
             </select>
-            
+            <button onClick={filterButtonHandler} className="flex items-center p-3 bg-blue-100 rounded text-white font-mulish">
+              <FaFilter className="mr-1" />
+              Filter
+            </button>
 
           </div>
         </div>
