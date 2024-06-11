@@ -1,12 +1,21 @@
 import PQueue from 'p-queue';
 
-const fetcher = (url: string) => fetch(url).then(res => res.json());
+type Fetcher = (url: string) => Promise<any>;
+
+const fetcher: Fetcher = (url: string) => fetch(url).then(res => res.json());
 
 const queue = new PQueue({ interval: 2500, intervalCap: 2 });
 
-const queuedFetcher = (url: string) => queue.add(() => fetcher(url));
+const queuedFetcher:Fetcher = (url: string) => queue.add(() => fetcher(url));
 
-export const swrConfig = {
+type SWRConfig = {
+  fetcher: Fetcher,
+  onErrorRetry: (error: any, _key: string, _config: any, revalidate: (opts: { retryCount: number }) => void, context: { retryCount: number }) => void,
+  refreshInterval: number,
+  dedupingInterval: number,
+};
+
+export const swrConfig: SWRConfig = {
   fetcher: queuedFetcher,
   onErrorRetry: (error, _key, _config, revalidate, { retryCount }) => {
     if (error.status === 404) return;
