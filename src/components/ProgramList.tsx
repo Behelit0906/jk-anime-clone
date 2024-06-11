@@ -1,11 +1,14 @@
 import AnimeType from "../types/AnimeType";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaWandMagicSparkles } from "react-icons/fa6";
-import dataFetcher from "../utils/dataFetcher";
+import { useNavigate } from 'react-router-dom';
+import { apiUrl } from "../constants";
+import useSWR from 'swr';
 
 function ProgramList() {
-  const [animes, setAnimes] =useState<AnimeType[]>([]);
+
+  const navigate = useNavigate();
 
   const darkModeInput = useRef<HTMLInputElement>(null);
 
@@ -20,16 +23,9 @@ function ProgramList() {
     localStorage.setItem('darkMode', String(inputValue));
   }
 
-  useEffect(() => {
-    const getAnimes = async () => {
-      const response = await dataFetcher(['/anime?status=airing&type=tv&order_by=start_date&sort=desc'])
-      setAnimes(response);
-    }
+  const { data } = useSWR(`${apiUrl}/anime?status=airing&type=tv&order_by=start_date&sort=desc`);
 
-    const id = setTimeout(getAnimes, 1000);
-
-    return () => clearTimeout(id);
-  }, []);
+  const animes: AnimeType[] = data?.data || [];
 
   useEffect(() => {
     const darkMode = localStorage.getItem('darkMode');
@@ -39,6 +35,17 @@ function ProgramList() {
       }
     }
   }, [])
+
+  function getRandomAnime() {
+    async function fetching () {
+      const response = await fetch('https://api.jikan.moe/v4/random/anime').then(e => e.json());
+      if(response.data) {
+        const id = response.data.mal_id;
+        navigate(`/anime/details/${id}`)
+      }
+    }
+    fetching();
+  }
 
   return (
     <section>
@@ -54,9 +61,9 @@ function ProgramList() {
                 <span className="right-circle absolute right-2 w-[26px] h-[26px] ml-2 bg-white rounded-full transition duration-300"></span>
               </label>
             </div>
-            <Link className="flex justify-center items-center rounded-[20px] w-9 h-8 bg-blue-50 transition-colors duration-300 hover:bg-myOrange-50" to='/'>
+            <button onClick={getRandomAnime} className="flex justify-center items-center rounded-[20px] w-9 h-8 bg-blue-50 transition-colors duration-300 hover:bg-myOrange-50" >
               <FaWandMagicSparkles className="text-white" />
-            </Link>
+            </button>
         </div>
         <h4 className="font-oswald text-[#333] dark:text-white text-[18px] pl-5 border-l-4 border-myOrange-50 py-1">
           SCHEDULING

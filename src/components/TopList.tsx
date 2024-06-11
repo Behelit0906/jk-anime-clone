@@ -1,25 +1,15 @@
 import AnimeType from "../types/AnimeType";
-import { useEffect, useState } from "react";
 import TopListCard from "./TopListCard";
 import { Link } from "react-router-dom";
 import { IoIosArrowRoundDown } from "react-icons/io";
 import TimerComponent from "./Timer";
-import dataFetcher from "../utils/dataFetcher";
+import useSWR from 'swr';
+import { apiUrl } from "../constants";
 
 function TopList() {
 
-  const [topList, setTopList] = useState<AnimeType[]>([]);
-
-  useEffect(() => {
-    async function getTopList() {
-      const response = await dataFetcher(['/top/anime?limit=10&page=1']);
-      setTopList(response);
-    }
-
-    const id = setTimeout(getTopList, 2000)
-
-    return () => clearTimeout(id);
-  }, [])
+  const { data } = useSWR(`${apiUrl}/top/anime?limit=10&page=1`);
+  const topList:AnimeType[] = data?.data || [];
 
   return (
     <section className="flex flex-col w-full cl-2:w-[540px] px-[15px] cl-2:px-0 lg:px-[15px] md:w-[720px] lg:w-[960px] xl:w-[1170px] py-6 bg-gray-100 dark:bg-dark-100 pb-10">

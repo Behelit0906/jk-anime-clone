@@ -1,25 +1,18 @@
-import { useState, useEffect } from "react";
 import AnimeType from "../types/AnimeType";
-import dataFetcher from "../utils/dataFetcher";
 import AddAnimeCard from "./AddAnimeCard";
+import useSWR from 'swr';
+import { apiUrl } from "../constants";
 
 function TableOfLatestAdditions() {
 
-  const [latestAdditions, setLatestAdditions] = useState<AnimeType[]>([]);
+  const { data: data1, error: error1, isValidating: isValidating1 } = useSWR(`${apiUrl}/anime?status=airing&type=tv&order_by=start_date&sort=desc&limit=20&page=1`);
 
-  useEffect(() => {
-    async function getLatestAdditions() {
-      const response = await dataFetcher([
-        '/anime?status=airing&type=tv&order_by=start_date&sort=desc&limit=22&page=1',
-        '/anime?status=airing&type=movie&order_by=start_date&sort=desc&limit=22&page2'
-      ])
-      setLatestAdditions(response);
-    }
+  const { data: data2, error: error2, isValidating: isValidating2 } = useSWR(`${apiUrl}/anime?type=movie&order_by=start_date&sort=desc&limit=20&page=1`);
 
-    const id = setTimeout(getLatestAdditions, 3000)
-    
-    return () => clearTimeout(id);
-  }, [])
+  const latestAdditions: AnimeType[] = [...(data1?.data || []), ...(data2?.data || [])];
+  
+  if (isValidating1 || isValidating2) return <div>Loading...</div>;
+  if (error1 || error2) return <div>Error loading data</div>;
 
   return (
     <section className="w-full cl-2:w-[540px] px-[15px] cl-2:px-0 lg:px-[15px] md:w-[720px] lg:w-[640px] xl:w-[780px] py-6">

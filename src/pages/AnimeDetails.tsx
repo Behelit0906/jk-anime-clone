@@ -7,10 +7,9 @@ import MobileAnimeDetailCard from "../components/AnimeDetailComponents/MobileAni
 import AnimeDetailCard from "../components/AnimeDetailComponents/AnimeDetailCard";
 import CharacterType from "../types/CharacterType";
 import ChapterCard from "../components/AnimeDetailComponents/ChapterCard";
-
+import useSWR from 'swr';
 
 function AnimeDetails() {
-  const [anime, setAnime] = useState<AnimeType>();
   const [groupsOfEpisodes, setGroupOfEpisodes] = useState<number[]>([]);
   const [chaptersToRender, setChaptersToRender] = useState<number[]>([]);
   const [characters, setCharacters] = useState<CharacterType[]>();
@@ -22,20 +21,14 @@ function AnimeDetails() {
   const characterTable = useRef<HTMLDivElement>(null);
   const chapterTable = useRef<HTMLDivElement>(null);
 
+  const { data } = useSWR(`${apiUrl}/anime/${id}`);
+
+  const anime:AnimeType = data?.data || null;
+
   useEffect(() => {
     if(!Number.isInteger(Number(id))) navigate('/')
   }, [id, navigate])
 
-  useEffect(() => {
-    async function getAnime() {
-      const response = await fetch(`${apiUrl}/anime/${id}`).then(res => res.json());
-
-      if(response) setAnime(response.data);
-      else navigate('/');
-    }
-
-    getAnime();
-  }, [id, navigate])
 
   useEffect(() => {
     if(anime?.episodes) {
@@ -109,7 +102,6 @@ function AnimeDetails() {
     for(let i = start; i <= end; i++)
       temp.push(i);
     
-    console.log(temp);
     setChaptersToRender(temp);
   }
   

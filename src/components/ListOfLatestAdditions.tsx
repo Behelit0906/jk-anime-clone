@@ -1,26 +1,26 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import dataFetcher from "../utils/dataFetcher";
 import AnimeType from "../types/AnimeType";
+import useSWR from 'swr';
+import { apiUrl } from "../constants";
 
 function ListOfLatestAdditions() {
 
-  const [latestAdditions, setLatestAdditions] = useState<AnimeType[]>([]);
+  const { data: data1, error: error1, isValidating: isValidating1 } = useSWR(
+    `${apiUrl}/anime?status=airing&type=tv&order_by=start_date&sort=desc&limit=22&page=1`
+  );
 
-  useEffect(() => {
-    async function getLatestAdditions() {
-      const response = await dataFetcher([
-        '/anime?status=airing&type=tv&order_by=start_date&sort=desc&limit=22&page=1',
-        '/anime?status=airing&type=tv&order_by=start_date&sort=desc&limit=22&page2',
-        '/anime?status=airing&type=tv&order_by=start_date&sort=desc&limit=22&page3',
-      ])
-      setLatestAdditions(response);
-    }
+  const { data: data2, error: error2, isValidating: isValidating2 } = useSWR(
+    `${apiUrl}/anime?status=airing&type=tv&order_by=start_date&sort=desc&limit=22&page=2`
+  );
 
-    const id = setTimeout(getLatestAdditions, 5000)
-    
-    return () => clearTimeout(id);
-  }, [])
+  const { data: data3, error: error3, isValidating: isValidating3 } = useSWR(
+    `${apiUrl}/anime?status=airing&type=tv&order_by=start_date&sort=desc&limit=22&page=3`
+  );
+
+  const latestAdditions: AnimeType[] = [...(data1?.data || []), ...(data2?.data || []), ...(data3?.data || [])];
+  
+  if (isValidating1 || isValidating2 || isValidating3) return <div>Loading...</div>;
+  if (error1 || error2 || error3) return <div>Error loading data</div>;
 
   return(
     <section className="pt-9" >
