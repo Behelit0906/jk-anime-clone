@@ -56,7 +56,7 @@ function MobileAnimeDetailCard(props: Props) {
         <div className="flex gap-5 mb-5 relative">
           <img className="w-full min-w-[100px] max-w-[120px] h-[180px] rounded" src={props.anime.images.jpg.image_url} alt={props.anime.title} />
           <h4 className="max-w-[50%] font-mulish font-bold text-2xl text-[#3d3d3d] dark:text-white">{props.anime.title}</h4>
-          <span className="absolute right-3 top-3 flex justify-center items-center w-[50px] h-[44px] bg-[#027bff] rounded">
+          <span className="absolute right-3 top-0 flex justify-center items-center w-[50px] h-[44px] bg-[#027bff] rounded">
             <MdOutlineFavorite color="white" />
           </span>
         </div>
