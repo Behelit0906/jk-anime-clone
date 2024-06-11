@@ -48,7 +48,7 @@ function Carousel(props: Props) {
               backgroundPosition: 'center' 
             }}>
               <div  className={`px-2 pt-16 cl-1:pt-14 cl-1:px-10 ${activeIndex === key ? 'slide-down-enter' : ''}`}>
-                <h2 className='font-oswald text-white text-[32px] cl-1:text-[42px] leading-[52px] mb-5'>
+                <h2 className='font-oswald text-white text-[32px] cl-1:text-[42px] leading-[52px] mb-5 text-s text-shadow'>
                   {item.title}
                 </h2>
                 <div className='flex items-center gap-1'>
