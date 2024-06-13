@@ -1,5 +1,4 @@
 import PQueue from 'p-queue';
-import { useEffect } from 'react';
 
 type Fetcher = (url: string) => Promise<any>;
 const queue = new PQueue({ interval: 1800, intervalCap: 3 }); 
