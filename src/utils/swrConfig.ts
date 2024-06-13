@@ -1,10 +1,20 @@
 import PQueue from 'p-queue';
+import { useEffect } from 'react';
 
 type Fetcher = (url: string) => Promise<any>;
+const queue = new PQueue({ interval: 1800, intervalCap: 3 }); 
 
-const fetcher: Fetcher = (url: string) => fetch(url).then(res => res.json());
-
-const queue = new PQueue({ interval: 2500, intervalCap: 2 });
+const fetcher = (url: string) => 
+  queue.add(async () => {
+    const controller = new AbortController()
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return await response.json();
+  }
+    
+);
 
 const queuedFetcher:Fetcher = (url: string) => queue.add(() => fetcher(url));
 
@@ -20,7 +30,7 @@ export const swrConfig: SWRConfig = {
   onErrorRetry: (error, _key, _config, revalidate, { retryCount }) => {
     if (error.status === 404) return;
     if (error.status === 429 && retryCount < 3) {
-      setTimeout(() => revalidate({ retryCount }), 2000);
+      setTimeout(() => revalidate({ retryCount }), 100);
     }
   },
   refreshInterval: 3000,
