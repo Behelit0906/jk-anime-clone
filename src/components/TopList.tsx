@@ -1,15 +1,10 @@
-import AnimeType from "../types/AnimeType";
 import TopListCard from "./TopListCard";
 import { Link } from "react-router-dom";
 import { IoIosArrowRoundDown } from "react-icons/io";
 import TimerComponent from "./Timer";
-import useSWR from 'swr';
-import { apiUrl } from "../constants";
+import top from '../json/top.json';
 
 function TopList() {
-
-  const { data } = useSWR(`${apiUrl}/top/anime?limit=10&page=1`);
-  const topList:AnimeType[] = data?.data || [];
 
   return (
     <section className="flex flex-col w-full cl-2:w-[540px] px-[15px] cl-2:px-0 lg:px-[15px] md:w-[720px] lg:w-[960px] xl:w-[1170px] py-6 bg-gray-100 dark:bg-dark-100 pb-10">
@@ -17,24 +12,24 @@ function TopList() {
         <span className="text-[#3a3a3a] dark:text-white">TOP ANIMES</span>
         <TimerComponent />
       </h4>
-      { topList && topList.length > 0 &&
+      { top.data &&
         <div className="flex flex-col lg:flex-row lg:gap-x-6">
           <div className="h-[260px] lg:w-[290px] xl:w-[360px] shrink-0">
             <TopListCard 
             height="h-full"
             rank={1}
             rankColor="bg-red-500"
-            title={topList[0].title}
-            backgroundImage={topList[0].images.jpg.large_image_url}
-            score={topList[0].score}
-            id={topList[0].mal_id}
+            title={top.data[0].title}
+            backgroundImage={top.data[0].images.jpg.large_image_url}
+            score={top.data[0].score}
+            id={top.data[0].mal_id}
             />
         
           </div>
           <div className="flex flex-col lg:w-full gap-y-2">
             <div className="flex flex-col lg:flex-row w-full h-[390px] gap-y-2 lg:h-full lg:gap-x-7">
               {
-                topList.map((anime, key) => {
+                top.data.map((anime, key) => {
                   const keys = [1, 2, 3];
                   if(keys.includes(key)) {
                     return (
@@ -56,7 +51,7 @@ function TopList() {
             <div className="flex gap-x-7 w-full h-[390px] lg:h-full lg:gap-x-2">
               <div className="flex flex-col w-2/4 gap-2 lg:flex-row">
                 {
-                  topList.map((anime, key) => {
+                  top.data.map((anime, key) => {
                     const keys = [4, 5, 6];
                     if(keys.includes(key)) {
                       return (
@@ -78,7 +73,7 @@ function TopList() {
               </div>
               <div className="flex flex-col w-2/4 gap-2 lg:flex-row">
                 {
-                  topList.map((anime, key) => {
+                  top.data.map((anime, key) => {
                     const keys = [7, 8, 9];
                     if(keys.includes(key)) {
                       return (
