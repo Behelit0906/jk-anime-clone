@@ -5,6 +5,7 @@ import { FaWandMagicSparkles } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { apiUrl } from "../constants";
 import useSWR from 'swr';
+import ProgramListSkeleton from "./SkeletonLoaders/ProgramListSkeleton";
 
 function ProgramList() {
 
@@ -73,28 +74,31 @@ function ProgramList() {
         <p className="w-2/4 p-[6px] text-center bg-[#DC821B] hover:cursor-pointer">Animes</p>
         <p className="w-2/4 p-[6px] text-center bg-[#FB9800] hover:cursor-pointer">Donghuas</p>
       </div>
-      <ul className="w-full overflow-y-auto h-[900px] rounded-[10px] bg-white dark:bg-dark-100 scrollBarColor mi-div">
       {
-        animes.length > 0 && animes.map((anime, key) => 
-          <li className="w-full min-h-[93px] hover:bg-[#E6E6E6] dark:hover:bg-[#303240] transition-colors duration-300" key={key}>
-            <Link className="flex gap-x-3 items-center py-[10px] px-[6px] h-fit border-b border-[#efefef] dark:border-[#303240]" to='/'>
-              <div className="relative w-[114px] h-[73px] rounded-[10px] overflow-hidden shrink-0">
-                <img className="absolute left-0 top-[-55%] w-[110px] h-[155px]" src={anime.images.jpg.image_url} alt={anime.title} />
-              </div>
-              <div className="flex justify-between w-full h-fit pr-3">
-                <div className="flex flex-col gap-1 font-mulish text-[13px]">
-                  <h5 className="font-bold text-[#323232] dark:text-white">{anime.title}</h5>
-                  <h6 className="text-myOrange-50 font-semibold">Episode {Math.ceil( anime.episodes ? Math.random() * anime.episodes : 12)}</h6>
+        animes.length > 0 ? 
+        <ul className="w-full overflow-y-auto h-[900px] rounded-[10px] bg-white dark:bg-dark-100 scrollBarColor mi-div">
+        {
+          animes.map((anime, key) => 
+            <li className="w-full min-h-[93px] hover:bg-[#E6E6E6] dark:hover:bg-[#303240] transition-colors duration-300" key={key}>
+              <Link className="flex gap-x-3 items-center py-[10px] px-[6px] h-fit border-b border-[#efefef] dark:border-[#303240]" to='/'>
+                <div className="relative w-[114px] h-[73px] rounded-[10px] overflow-hidden shrink-0">
+                  <img className="absolute left-0 top-[-55%] w-[110px] h-[155px]" src={anime.images.jpg.image_url} alt={anime.title} />
                 </div>
-                <div className="flex items-center shrink-0">
-                  <img src="https://cdn.jkdesu.com/assets2/css/img/flecha.png" />
+                <div className="flex justify-between w-full h-fit pr-3">
+                  <div className="flex flex-col gap-1 font-mulish text-[13px]">
+                    <h5 className="font-bold text-[#323232] dark:text-white">{anime.title}</h5>
+                    <h6 className="text-myOrange-50 font-semibold">Episode {Math.ceil( anime.episodes ? Math.random() * anime.episodes : 12)}</h6>
+                  </div>
+                  <div className="flex items-center shrink-0">
+                    <img src="https://cdn.jkdesu.com/assets2/css/img/flecha.png" />
+                  </div>
                 </div>
-              </div>
-            </Link>
-          </li>  
-        )
+              </Link>
+            </li>  
+          )
+        }
+        </ul> : <ProgramListSkeleton />
       }
-      </ul>
     </section>
   )
 }
