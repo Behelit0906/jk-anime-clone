@@ -1,9 +1,12 @@
+import { lazy, Suspense } from "react";
 import {Routes , Route, Navigate } from "react-router-dom" 
-import Home from "./pages/Home";
-import Directory from "./pages/Directory";
-import  Letter from "./pages/Letter";
-import AnimeDetails from "./pages/AnimeDetails";
-import Genre from "./pages/Genre";
+const Home = lazy(() => import('./pages/Home'));
+const Directory = lazy(() => import('./pages/Directory'));
+const Letter = lazy(() => import('./pages/Letter'));
+const AnimeDetails = lazy(() => import('./pages/AnimeDetails'));
+const Genre = lazy(() => import('./pages/Genre'));
+const Top = lazy(() => import('./pages/Top'));
+
 
 import { useEffect } from "react";
 
@@ -16,16 +19,17 @@ const App = () => {
     }, [])
 
     return (
-      <>
+      <Suspense>
         <Routes>
           <Route path="/" Component={Home} />
           <Route path="/directory" Component={Directory} />
           <Route path="/letter/:letter" Component={Letter} />
           <Route path="/genre/:id" Component={Genre} />
           <Route path="/anime/details/:id" Component={AnimeDetails} />
+          <Route path="/top" Component={Top} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </>  
+      </Suspense>  
     )
 }
 
