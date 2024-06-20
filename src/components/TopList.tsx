@@ -9,8 +9,8 @@ function TopList() {
   return (
     <section className="flex flex-col w-full cl-2:w-[540px] px-[15px] cl-2:px-0 lg:px-[15px] md:w-[720px] lg:w-[960px] xl:w-[1170px] py-6 bg-gray-100 dark:bg-dark-100 pb-10">
       <h4 className="font-oswald border-l-4 border-myOrange-50 pl-4 py-2 text-2xl font-semibold leading-[21px] mb-7">
-        <span className="text-[#3a3a3a] dark:text-white">TOP ANIMES</span>
-        <TimerComponent />
+        <span className="text-[#3a3a3a] dark:text-white mr-2">TOP ANIMES</span>
+        <TimerComponent textSize="text-[32px]" />
       </h4>
       { top.data &&
         <div className="flex flex-col lg:flex-row lg:gap-x-6">
@@ -98,7 +98,7 @@ function TopList() {
         </div>
       }
       <div className="flex justify-center mt-10">
-        <Link className="font-mulish text-2xl text-[#3a3a3a] dark:text-white transition-colors duration-200 dark:hover:text-blue-50 hover:text-blue-50" to="/">
+        <Link className="font-mulish text-2xl text-[#3a3a3a] dark:text-white transition-colors duration-200 dark:hover:text-blue-50 hover:text-blue-50" to="/top?season=&year=">
           <IoIosArrowRoundDown className="inline" /> View full list <IoIosArrowRoundDown className="inline" />
         </Link> 
       </div> 

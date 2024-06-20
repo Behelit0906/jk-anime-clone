@@ -20,7 +20,7 @@ function NavBar(props:Props) {
       <div className="flex items-center flex-wrap lg:flex-nowrap justify-center gap-1 lg:gap-5 lg:mr-3">
         <LinkComponent link="/directory" padding="p-[10px] lg:p-[15px]">Directory</LinkComponent>
         <LinkComponent link="./" padding="p-[10px] lg:p-[15px]">Schedules</LinkComponent>
-        <LinkComponent link="./" padding="p-[10px] lg:p-[15px]">Top</LinkComponent>
+        <LinkComponent link="/top" padding="p-[10px] lg:p-[15px]">Top</LinkComponent>
         <a className="relative bg-white p-[10px] lg:p-[14px] rounded-[10px] text-[#c454d7] font-mulish hover:bg-gray-100 transition-colors duration-300 font-bold" href="./" target="_blank">
           <span className="w-[20px] p-[2px] absolute top-0 right-0 text-[9px] bg-[#c454d7] text-[#ffc107] rounded-tr-[10px]">+18</span>
           Hentai
