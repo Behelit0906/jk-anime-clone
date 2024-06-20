@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { MdOutlineWatchLater } from "react-icons/md";
 
+interface Props {
+  textSize: string
+}
 
-function Timer() {
+function Timer(props:Props) {
   const calculateTimeLeft = () => {
     const now = new Date();
     const minutes = 59 - now.getUTCMinutes();
@@ -22,8 +25,8 @@ function Timer() {
   }, [])
 
   return (
-    <span className='ml-2 text-myOrange-50'>
-      <MdOutlineWatchLater className='inline pb-1 text-3xl font-bold' /> UPDATED IN { timer }
+    <span className='text-myOrange-50 font-oswald'>
+      <MdOutlineWatchLater className={`inline pb-1 ${props.textSize} font-black`} /> UPDATED IN { timer }
     </span>
   );
 }
