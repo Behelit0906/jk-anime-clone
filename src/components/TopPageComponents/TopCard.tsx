@@ -10,7 +10,7 @@ interface Props {
 function TopCard( { anime, number } :Props ) {
 
   return (
-    <div className="relative cl-2:flex cl-2:gap-4">
+    <div className="relative cl-2:flex cl-2:gap-4 xl:gap-8">
       <Link 
         className="block w-[60px] h-[84.9px] cl-2:w-[83.63px] cl-2:h-[118.35px] md:w-[114.23px] md:h-[161.65px] lg:w-[155px] lg:h-[219.3px] xl:w-[190.7px] xl:h-[269.73px] relative mb-2 shrink-0" 
         to={`/anime/details/${anime.mal_id}`}>
@@ -21,16 +21,16 @@ function TopCard( { anime, number } :Props ) {
           <img  className="w-full h-full" src={anime.images.jpg.image_url} alt={anime.title || anime.title_english} />
       </Link>
       <div className="text-[17px] lg:text-[36px] cl-2:text-xl cl-2:relative">
-        <h2 className="absolute top-6 left-20 cl-2:relative cl-2:top-auto cl-2:left-auto lg:pt-3">
+        <h2 className="absolute top-6 left-20 cl-2:relative cl-2:top-auto cl-2:left-auto lg:pt-3 dark:text-white">
           {`#${number} `}
-          <Link className="text-blue-100 hover:text-myOrange-50 transition-colors leading-4 lg:leading-10" to={`/anime/details/${anime.mal_id}`}>
+          <Link className="text-blue-100 hover:text-myOrange-50 transition-colors leading-4 lg:leading-10 dark:text-[#abb2dc]" to={`/anime/details/${anime.mal_id}`}>
             {anime.title || anime.title_english}
           </Link>
         </h2>
         <span className="text-[#709db3] text-base absolute top-12 left-20 cl-2:relative cl-2:top-[-5px] cl-2:left-auto">
           Serie {`/ ${anime.episodes || ''}`} Eps
         </span>
-        <p className="text-[11px] lg:text-base leading-[25px] text-[#3d3d3d] overflow-hidden">
+        <p className="text-[11px] lg:text-base leading-[25px] text-[#3d3d3d] overflow-hidden dark:text-white">
           { anime.synopsis ?
            `${anime.synopsis.slice(0, 400)}...`
              : 'Synopsis not available...'

@@ -11,7 +11,7 @@ function LocationString() {
 
   return (
     <div className="flex gap-1">
-      <Link className="flex gap-1 items-center font-mulish text-[15px]" to={'/'}>
+      <Link className="flex gap-1 items-center font-mulish text-[15px] dark:text-white" to={'/'}>
         <FaHome className="mr-2" />
           Home
         <IoIosArrowForward />

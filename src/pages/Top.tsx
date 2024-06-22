@@ -135,25 +135,32 @@ function Top () {
         </section>
         <section className="flex flex-col">
           <p className="text-[26px] mb-5">Most voted anime | <span className=""><Timer textSize="text-[32px]" /></span></p>
-          <div className="flex flex-col gap-[6px] md:flex-row p-5 rounded-[17px] bg-[#E3E3E3] mb-5">
-            <select  onChange={(e) => setSeason(e.currentTarget.value)} value={season} className="w-full pl-[18px] h-10 md:w-2/4 bg-[#F7F7F7] rounded-[5px]">
-              <option value=''>Season</option>
-              <option value={'spring'}>Spring</option>
-              <option value={'summer'}>Summer</option>
-              <option value={'fall'}>Fall</option>
-              <option value={'winter'}>Winter</option>
+          <div className="flex flex-col gap-[6px] md:flex-row p-5 rounded-[17px] bg-[#E3E3E3] mb-5 dark:bg-dark-50">
+            <select 
+              onChange={(e) => setSeason(e.currentTarget.value)} 
+              value={season} 
+              className="w-full pl-[18px] h-10 md:w-2/4 bg-[#F7F7F7] rounded-[5px] dark:bg-dark-150 dark:text-white">
+                <option value=''>Season</option>
+                <option value={'spring'}>Spring</option>
+                <option value={'summer'}>Summer</option>
+                <option value={'fall'}>Fall</option>
+                <option value={'winter'}>Winter</option>
             </select>
-            <select onChange={(e) => setYear(e.currentTarget.value)} value={year} className="w-full pl-[18px] h-10 md:w-2/4 bg-[#F7F7F7] rounded-[5px]" name="" id="">
-              <option value={''}>Year</option>
-              {
-                years.map((item) => 
-                  <option value={item} key={item}>{item}</option>
-                )
-              }
+            <select 
+              onChange={(e) => setYear(e.currentTarget.value)} 
+              value={year} 
+              className="w-full pl-[18px] h-10 md:w-2/4 bg-[#F7F7F7] rounded-[5px] dark:bg-dark-150 dark:text-white">
+                <option value={''}>Year</option>
+                {
+                  years.map((item) => 
+                    <option value={item} key={item}>{item}</option>
+                  )
+                }
             </select>
-            <button onClick={clickHandler} className="flex py-[6px] px-[12px] md:w-[200px] xl:w-[250px] items-center justify-center bg-[#007bff] hover:bg-[#0069D9] transition-colors rounded text-[18px] text-white font-mulish">
-              <FaFilter className="mr-1" />
-              Filter
+            <button onClick={clickHandler} 
+              className="flex py-[6px] px-[12px] md:w-[200px] xl:w-[250px] items-center justify-center bg-[#007bff] hover:bg-[#0069D9] transition-colors rounded text-[18px] text-white font-mulish dark:bg-dark-150">
+                <FaFilter className="mr-1" />
+                Filter
             </button>
           </div>
           <section>
