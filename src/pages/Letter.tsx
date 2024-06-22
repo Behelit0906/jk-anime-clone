@@ -1,50 +1,50 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Layout from "./Layout";
 import { apiUrl } from "../constants";
 import AnimeType from "../types/AnimeType";
 import AddAnimeCard from "../components/AddAnimeCard";
+import useSWR from "swr";
 
 
 function Letter () {
-  const [animes, setAnimes] = useState<AnimeType[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const { letter } = useParams();
+  const searchParams = new URLSearchParams(location.search);
+  const pageQuery = Number(searchParams.get('page')) || 1;
+  const letterQuery = String(searchParams.get('letter') || 'A');
+  const [page, setPage] = useState(pageQuery);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const letters = 'ABCDEFGHIJKLMOPQRSTUVWXYZ'.split('');
-    if(!letters.includes(String(letter))) navigate('/')
-  }, [letter, navigate])
+    const letters = 'ABCDEFGHIJKLMOPQRSTUVWXYZ'
+    if(!letters.includes(letterQuery)) navigate('/')
+  }, [letterQuery, navigate])
 
   useEffect(() => {
-    async function getAnimes() {
-      const response = await fetch(`${apiUrl}/anime?sfw&letter=${letter}&limit=24&page=${page}`).then(res => res.json());
+    setPage(pageQuery);
+  }, [pageQuery])
 
-      if(response){
-        setAnimes(response.data);
-        setTotalPages(response.pagination.last_visible_page);
-      } 
-      else {
-        setAnimes([]);
-        setTotalPages(0)
-      } 
-    }
+  const { data } = useSWR(`${apiUrl}/anime?sfw&letter=${letterQuery}&limit=24&page=${pageQuery}`)
 
-    getAnimes();
-  }, [letter, page]);
+  const animes: AnimeType[] = data?.data || [];
+  const totalPages = data?.pagination.last_visible_page || 0;
 
   function clickHandler(e:React.MouseEvent<HTMLButtonElement>) {
-    if(e.currentTarget.name === 'previousButton') setPage(page - 1);
-    else setPage(page + 1);
+    const temp = page
+    if(e.currentTarget.name === 'previousButton') {
+      navigate(`/letter?letter=${letterQuery}&page=${temp - 1}`)
+    }
+    else {
+      navigate(`/letter?letter=${letterQuery}&page=${temp + 1}`)
+    }
+
   }
-  
+ 
+
   return (
     <Layout>
       <section className="w-full py-[60px] cl-2:w-[540px] md:w-[720px] lg:w-[960px] xl:w-[1170px] px-[15px]">
         <h4 className="font-oswald leading-[21px] text-[#212529] dark:text-white text-2xl pl-[20px] border-l-4 border-myOrange-50 mb-10">
-          LETTER {letter}
+          LETTER {letterQuery}
         </h4>
         <div className="flex flex-wrap justify-between lg:justify-between gap-4">
           {
