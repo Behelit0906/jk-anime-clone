@@ -1,6 +1,5 @@
 import Layout from "./Layout";
 import LocationString from "../components/TopPageComponents/LocationString";
-import Links from "../components/TopPageComponents/Links";
 import Timer from "../components/Timer";
 import { FaFilter } from "react-icons/fa";
 import { useState, useEffect } from "react";
@@ -70,7 +69,7 @@ function Top () {
   const [isDisabled, setIsDisabled] = useState(false);
   
   
-  const url = `${apiUrl}/anime?order_by=score&sort=desc&limit=10&start_date=${yearQuery}${dateRange[0]}&end_date=${yearQuery}${dateRange[1]}&page=${page}`
+  const url = `${apiUrl}/anime?order_by=score&sort=desc&limit=10&start_date=${yearQuery}${dateRange[0]}&end_date=${yearQuery}${dateRange[1]}&page=${page}&sfw=true`
   const { data } = useSWR(url);
 
   useEffect(() => {
@@ -129,12 +128,11 @@ function Top () {
   return (
     <Layout>
       <section className="w-full pt-4 pb-[60px] cl-2:w-[540px] md:w-[720px] lg:w-[960px] xl:w-[1170px] px-[15px] font-mulish">
-        <section className="flex flex-col gap-10 mb-14">
+        <section className="flex flex-col gap-10 mb-7">
           <LocationString />
-          <Links />
         </section>
         <section className="flex flex-col">
-          <p className="text-[26px] mb-5">Most voted anime | <span className=""><Timer textSize="text-[32px]" /></span></p>
+          <p className="text-[26px] mb-5 dark:text-white">Most voted anime | <span className=""><Timer textSize="text-[32px]" /></span></p>
           <div className="flex flex-col gap-[6px] md:flex-row p-5 rounded-[17px] bg-[#E3E3E3] mb-5 dark:bg-dark-50">
             <select 
               onChange={(e) => setSeason(e.currentTarget.value)} 
