@@ -79,7 +79,7 @@ function Directory() {
 
   }
 
-  const { data } = useSWR(`${apiUrl}/anime?genres=${queries.genre.mal_id}&type=${queries.type.id}&status=${queries.status}${queries.year !== 0 ? `&start_date=${queries.year}-01-01` : ''}&limit=24&page=${queries.page}&order_by=${queries.sortingCriteria}&sort=${queries.order}`);
+  const { data } = useSWR(`${apiUrl}/anime?genres=${queries.genre.mal_id}&type=${queries.type.id}&status=${queries.status}${queries.year !== 0 ? `&start_date=${queries.year}-01-01` : ''}&limit=24&page=${queries.page}&order_by=${queries.sortingCriteria}&sort=${queries.order}&sfw=true`);
 
   const animes:AnimeType[] = data?.data || null;
 
@@ -100,8 +100,8 @@ function Directory() {
               <option value="popularity">Popularity</option>
             </select>
             <select onChange={selectHandler} value={order} name="order" className="p-3 w-26 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
-              <option value="desc">Descending</option>
-              <option value="asc">Ascending</option>
+              <option value="asc">Descending</option>
+              <option value="desc">Ascending</option>
             </select>
             <select onChange={selectHandler} value={`${genre.id}|${genre.urlName}`} name="genre" className="p-3 w-24 font-mulish text-sm bg-white border border-[#dbdbdb] rounded">
               <option value="|">Genre</option>
