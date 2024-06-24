@@ -23,7 +23,7 @@ function Letter () {
     setPage(pageQuery);
   }, [pageQuery])
 
-  const { data } = useSWR(`${apiUrl}/anime?sfw&letter=${letterQuery}&limit=24&page=${pageQuery}`)
+  const { data } = useSWR(`${apiUrl}/anime?sfw&letter=${letterQuery}&limit=24&page=${pageQuery}&sfw=true`)
 
   const animes: AnimeType[] = data?.data || [];
   const totalPages = data?.pagination.last_visible_page || 0;
@@ -31,10 +31,10 @@ function Letter () {
   function clickHandler(e:React.MouseEvent<HTMLButtonElement>) {
     const temp = page
     if(e.currentTarget.name === 'previousButton') {
-      navigate(`/letter?letter=${letterQuery}&page=${temp - 1}`)
+      navigate(`/anime-by-letter?letter=${letterQuery}&page=${temp - 1}`)
     }
     else {
-      navigate(`/letter?letter=${letterQuery}&page=${temp + 1}`)
+      navigate(`/anime-by-letter?letter=${letterQuery}&page=${temp + 1}`)
     }
 
   }
