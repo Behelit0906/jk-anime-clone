@@ -8,7 +8,7 @@ function DirectoryFilter() {
       {
         letters.map((letter, key) => 
           <li key={key} className="text-white hover:bg-white hover:text-[#607d8b]">
-            <Link to={`/letter/${letter}`} className="block p-[10px]">{letter}</Link>
+            <Link to={`/anime-by-letter?letter=${letter}`} className="block p-[10px]">{letter}</Link>
           </li>
         )
       }
