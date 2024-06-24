@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 interface Props {
   animes?: AnimeType[]
-  isLoading?: boolean
+  isLoading?: boolean,
+  query?: string
 }
 
 function SearchList(props: Props) {
@@ -27,12 +28,12 @@ function SearchList(props: Props) {
                 </li>  
               )
             }
-            <Link className="w-full block p-[10px] rounded text-center bg-gray-100 font-bold text-base" to="./">
-                Más Resultados
+            <Link className="w-full block p-[10px] rounded text-center bg-gray-100 font-bold text-base" to={`/search?q=${props.query}&page=1`}>
+                More results
             </Link>
           </ul>
         ) : (
-          <p className="pb-7 pt-3 text-center font-mulish text-[#3d3d3d]">No se encontraron resultados.</p>
+          <p className="pb-7 pt-3 text-center font-mulish text-[#3d3d3d]">No results found.</p>
         )
       }
     </article>

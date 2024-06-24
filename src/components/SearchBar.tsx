@@ -7,9 +7,6 @@ import { FaUserCircle } from "react-icons/fa";
 import useSWR from 'swr';
 import { apiUrl } from '../constants'
 
-
-const fetcher = (url: string) => fetch(url).then(res => res.json());
-
 function SearchBar() {
   const [text, setText] = useState('');
   const [query, setQuery] = useState('');
@@ -17,11 +14,7 @@ function SearchBar() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { data, isLoading} = useSWR(query ? `${apiUrl}/anime?q=${query}&limit=6&page=1&swf&type=tv` : null, fetcher, {
-    revalidateOnFocus: false, // No revalidamos en el foco para este caso
-    shouldRetryOnError: false, // No re intentamos en error para este caso
-    dedupingInterval: 60000, // Tiempo en ms para de duplicar peticiones
-  });
+  const { data, isLoading} = useSWR(query ? `${apiUrl}/anime?q=${query}&limit=6&page=1&sfw=true&type=tv` : null);
 
   // Los animes ahora vienen directo de data
   const animes:AnimeType[] = data?.data || null;
@@ -71,23 +64,12 @@ function SearchBar() {
       {
         (showSearchList) && (
           isLoading ? (
-            <SearchList isLoading={isLoading} />
+            <SearchList isLoading={isLoading} query={text} />
           ):
           Array.isArray(animes) && (
-            <SearchList animes={animes} />
+            <SearchList animes={animes} query={text} />
           )
         )
-
-        // {
-        //   isLoading ? (
-        //     <SearchList isLoading={isLoading} />
-        //   ) : (
-        //     Array.isArray(animes) && (
-        //       <SearchList animes={animes} />
-        //     )
-        //   ) 
-        // }
-
       }
     </div>
   )
