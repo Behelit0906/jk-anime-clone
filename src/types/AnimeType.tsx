@@ -57,7 +57,8 @@ type AnimeType = {
     url: string,
     embed_url: string
   },
-  scored_by: number
+  scored_by: number,
+  rating: string
 }
 
 export default AnimeType
