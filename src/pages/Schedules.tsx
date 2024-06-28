@@ -56,7 +56,7 @@ function Schedules () {
   useEffect(() => {
     if(data !== undefined && data.data !== undefined) {
       const ratings = ['PG-13 - Teens 13 or older', 'R+ - Mild Nudity', 'R - 17+ (violence & profanity)']
-      const temp = data.data.filter(anime => ratings.includes(anime.rating))
+      const temp = data.data.filter((anime: { rating: string; }) => ratings.includes(anime.rating))
       setAnimes(temp);
     }  
   }, [data])
