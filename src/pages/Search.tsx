@@ -17,9 +17,9 @@ function Search () {
   const orderByQuery = ['title', 'start_date'].includes(String(searchParams.get('order_by'))) ? String(searchParams.get('order_by')) : 'title';
   const typeQuery = ['tv','movie','special','ova','ona'].includes(String(searchParams.get('type'))) ? String(searchParams.get('type')) : '';
   const stateQuery = ['airing', 'complete'].includes(String(searchParams.get('status'))) ? String(searchParams.get('status')) : '';
-  const sortQuery = ['asc', 'desc'].includes(String(searchParams.get('sort'))) ? String(searchParams.get('sort')) : 'asc'
+  const sortQuery = ['asc', 'desc'].includes(String(searchParams.get('sort'))) ? String(searchParams.get('sort')) : 'asc';
+  const ratings = ['PG-13 - Teens 13 or older', 'R+ - Mild Nudity', 'R - 17+ (violence & profanity)'];
 
-  console.log(sortQuery);
 
   const [orderBy, setOrderBy] = useState(orderByQuery);
   const [type, setType] = useState(typeQuery);
@@ -27,8 +27,8 @@ function Search () {
   const [sort, setSort] = useState(sortQuery);
 
 
-  const { data } = useSWR(`${apiUrl}/anime?q=${q}&type=${typeQuery}&order_by=${orderByQuery}&status=${stateQuery}&sort=${sortQuery}&page=${pageQuery}&limit=24&sfw=true`)
-  const animes:AnimeType[] = data?.data || [];
+  const { data } = useSWR(`${apiUrl}/anime?q=${q}&type=${typeQuery}&order_by=${orderByQuery}&status=${stateQuery}&sort=${sortQuery}&page=${pageQuery}&limit=25&sfw=true`)
+  const animes:AnimeType[] = data?.data.filter((anime: { rating: string; }) => ratings.includes(anime.rating)) || [];
   const totalPages = data?.pagination?.last_visible_page;
 
 
