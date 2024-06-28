@@ -7,6 +7,7 @@ const AnimeDetails = lazy(() => import('./pages/AnimeDetails'));
 const Genre = lazy(() => import('./pages/Genre'));
 const Top = lazy(() => import('./pages/Top'));
 const Search = lazy(() => import('./pages/Search'));
+const Schedules = lazy(() => import('./pages/Schedules'));
 
 
 import { useEffect } from "react";
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/anime/details/:id" Component={AnimeDetails} />
           <Route path="/top" Component={Top} />
           <Route path="/search" Component={Search} />
+          <Route path="/schedules" Component={Schedules}/>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>  
