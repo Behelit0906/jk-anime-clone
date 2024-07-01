@@ -4,18 +4,41 @@ import { AiFillLike } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import { BsFillPauseCircleFill } from "react-icons/bs";
+import RelationsType from "../../types/RelationsType";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
-interface Props {
+interface Props { 
   anime: AnimeType,
   peopleWatching: number,
   viewed: number,
   toView: number,
   genres: string,
-  studios: string
+  studios: string,
+  relations: RelationsType[]
 }
 
+interface entry {
+  mal_id: number,
+  type: string,
+  name: string,
+  url: string
+}
 
-function AnimeDetailCard({ anime, peopleWatching, viewed, toView, genres, studios }:Props) {
+function AnimeDetailCard({ anime, peopleWatching, viewed, toView, genres, studios, relations }:Props) {
+  const [showTitles, setShowTitle] = useState(false);
+  const prequels:entry[] = [];
+  const sequels:entry[] = [];
+  const alternativeVersions:entry[] = []
+  const additional:entry[] = [];
+  for(let i = 0; i < relations.length; i++) {
+    if(relations[i].relation === 'Prequel') prequels.push(...relations[i].entry)
+    else if(relations[i].relation === 'Sequel') sequels.push(...relations[i].entry)
+    else if(relations[i].relation === 'Alternative Version')
+      alternativeVersions.push(...relations[i].entry);
+    else if(relations[i].relation === 'Side Story') additional.push(...relations[i].entry)
+  }
 
   let status = '';
   if(anime.status === 'Not yet aired') status = 'Upcoming';
@@ -127,8 +150,11 @@ function AnimeDetailCard({ anime, peopleWatching, viewed, toView, genres, studio
             </ul>
             <div className="flex w-2/4 flex-col gap-3">
               <div>
-                <h5 className="font-mulish font-bold text-[18px] text-blue-100">Alternative Titles</h5>
-                <ul className="pt-1 font-mulish">
+                <h5 onClick={() => setShowTitle(prev => !prev)} className="w-fit flex items-center gap-1 font-mulish font-bold text-[18px] text-blue-100 cursor-pointer">
+                  Alternative Titles 
+                  <MdKeyboardArrowDown 
+                  className={`text-3xl transition-transform  ease-in-out duration-500 ${showTitles ? 'rotate-180' : ''}`} /></h5>
+                <ul className={`pt-1 transition-all ease-in-out duration-500 font-mulish mb-2 overflow-hidden ${showTitles ? 'max-h-screen' : 'max-h-0'}`}>
                   {
                     anime.title_english &&
                     <li className="text-[#212529] dark:text-white">
@@ -144,6 +170,80 @@ function AnimeDetailCard({ anime, peopleWatching, viewed, toView, genres, studio
                     </li>
                   }
                 </ul>
+                {
+                  prequels.length > 0 &&
+                  <>
+                    <h5 className="text-blue-100 text-[18px] font-bold font-mulish">Prequel</h5>
+                    <ul>
+                      {
+                        prequels.map(prequel => 
+                          <li key={prequel.mal_id}>
+                            <Link className="font-mulish dark:text-white dark:hover:text-myOrange-50 hover:text-myOrange-50 transition-colors" 
+                            to={`/anime/details/${prequel.mal_id}`}>
+                              {prequel.name}
+                            </Link>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </>
+                }
+                {
+                  sequels.length > 0 &&
+                  <>
+                    <h5 className="text-blue-100 text-[18px] font-bold font-mulish">Sequel</h5>
+                    <ul>
+                      {
+                        sequels.map(sequel => 
+                          <li key={sequel.mal_id}>
+                            <Link className="font-mulish dark:text-white dark:hover:text-myOrange-50 hover:text-myOrange-50 transition-colors" 
+                            to={`/anime/details/${sequel.mal_id}`}>
+                              {sequel.name}
+                            </Link>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </>
+                }
+                {
+                  alternativeVersions.length > 0 &&
+                  <>
+                    <h5 className="text-blue-100 text-[18px] font-bold font-mulish">Alternative Versions</h5>
+                    <ul>
+                      {
+                        alternativeVersions.map(version => 
+                          <li key={version.mal_id}>
+                            <Link className="font-mulish dark:text-white dark:hover:text-myOrange-50 hover:text-myOrange-50 transition-colors" 
+                            to={`/anime/details/${version.mal_id}`}>
+                              {version.name}
+                            </Link>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </>
+                }
+
+                {
+                  additional.length > 0 &&
+                  <>
+                    <h5 className="text-blue-100 text-[18px] font-bold font-mulish">Additional</h5>
+                    <ul>
+                      {
+                        additional.map(item => 
+                          <li key={item.mal_id}>
+                            <Link className="font-mulish dark:text-white dark:hover:text-myOrange-50 hover:text-myOrange-50 transition-colors" 
+                            to={`/anime/details/${item.mal_id}`}>
+                              {item.name}
+                            </Link>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </>
+                }
+                
               </div>
               {
                 anime.trailer.embed_url &&

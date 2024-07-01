@@ -1,10 +1,12 @@
-import { MdOutlineFavorite } from "react-icons/md";
+import { MdKeyboardArrowDown, MdOutlineFavorite } from "react-icons/md";
 import AnimeType from "../../types/AnimeType";
 import { AiFillLike } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import { BsFillPauseCircleFill } from "react-icons/bs";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import RelationsType from "../../types/RelationsType";
+import { Link } from "react-router-dom";
 
 interface Props {
   anime: AnimeType,
@@ -12,15 +14,36 @@ interface Props {
   viewed: number,
   toView: number,
   genres: string,
-  studios: string
+  studios: string,
+  relations: RelationsType[]
+}
+
+interface entry {
+  mal_id: number,
+  type: string,
+  name: string,
+  url: string
 }
 
 function MobileAnimeDetailCard(props: Props) {
 
+  const [showTitle, setShowTitle] = useState(false);
   const synopsisButton = useRef<HTMLButtonElement>(null);
   const informationButton = useRef<HTMLButtonElement>(null);
   const synopsis = useRef<HTMLParagraphElement>(null);
   const information = useRef<HTMLDivElement>(null);
+
+  const prequels:entry[] = [];
+  const sequels:entry[] = [];
+  const alternativeVersions:entry[] = []
+  const additional:entry[] = [];
+  for(let i = 0; i < props.relations.length; i++) {
+    if(props.relations[i].relation === 'Prequel') prequels.push(...props.relations[i].entry)
+    else if(props.relations[i].relation === 'Sequel') sequels.push(...props.relations[i].entry)
+    else if(props.relations[i].relation === 'Alternative Version')
+      alternativeVersions.push(...props.relations[i].entry);
+    else if(props.relations[i].relation === 'Side Story') additional.push(...props.relations[i].entry)
+  }
 
   let status = '';
   if(props.anime.status === 'Not yet aired') status = 'Upcoming';
@@ -122,23 +145,99 @@ function MobileAnimeDetailCard(props: Props) {
               </ul>
               <div className="md:w-2/4 flex flex-col gap-3">
                 <div>
-                  <h5 className="font-mulish font-bold text-[18px] text-blue-100">Alternative Titles</h5>
-                  <ul className="flex flex-col gap-y-2 pt-1 font-mulish">
-                    {
-                      props.anime.title_english &&
-                      <li className="text-[#212529] dark:text-white">
-                        <b>English</b>
-                        <p>{props.anime.title_english}</p>
-                      </li>
-                    }
-                    {
-                      props.anime.title_japanese &&
-                      <li className="text-[#212529] dark:text-white">
-                        <b>Japanese</b>
-                        <p>{props.anime.title_japanese}</p>
-                      </li>
-                    }
-                  </ul>
+                <h5 onClick={() => setShowTitle(prev => !prev)} className="w-fit flex items-center gap-1 font-mulish font-bold text-[18px] text-blue-100 cursor-pointer">
+                  Alternative Titles 
+                  <MdKeyboardArrowDown 
+                  className={`text-3xl transition-transform  ease-in-out duration-500 ${showTitle ? 'rotate-180' : ''}`} /></h5>
+                <ul className={`pt-1 transition-all ease-in-out duration-500 font-mulish mb-2 overflow-hidden ${showTitle ? 'max-h-screen' : 'max-h-0'}`}>
+                  {
+                    props.anime.title_english &&
+                    <li className="text-[#212529] dark:text-white">
+                      <b>English</b>
+                      <p>{props.anime.title_english}</p>
+                    </li>
+                  }
+                  {
+                    props.anime.title_japanese &&
+                    <li className="text-[#212529] dark:text-white">
+                      <b>Japanese</b>
+                      <p>{props.anime.title_japanese}</p>
+                    </li>
+                  }
+                </ul>
+                {
+                  prequels.length > 0 &&
+                  <>
+                    <h5 className="text-blue-100 text-[18px] font-bold font-mulish">Prequel</h5>
+                    <ul>
+                      {
+                        prequels.map(prequel => 
+                          <li key={prequel.mal_id}>
+                            <Link className="font-mulish dark:text-white dark:hover:text-myOrange-50 hover:text-myOrange-50 transition-colors" 
+                            to={`/anime/details/${prequel.mal_id}`}>
+                              {prequel.name}
+                            </Link>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </>
+                }
+                {
+                  sequels.length > 0 &&
+                  <>
+                    <h5 className="text-blue-100 text-[18px] font-bold font-mulish">Sequel</h5>
+                    <ul>
+                      {
+                        sequels.map(sequel => 
+                          <li key={sequel.mal_id}>
+                            <Link className="font-mulish dark:text-white dark:hover:text-myOrange-50 hover:text-myOrange-50 transition-colors" 
+                            to={`/anime/details/${sequel.mal_id}`}>
+                              {sequel.name}
+                            </Link>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </>
+                }
+                {
+                  alternativeVersions.length > 0 &&
+                  <>
+                    <h5 className="text-blue-100 text-[18px] font-bold font-mulish">Alternative Versions</h5>
+                    <ul>
+                      {
+                        alternativeVersions.map(version => 
+                          <li key={version.mal_id}>
+                            <Link className="font-mulish dark:text-white dark:hover:text-myOrange-50 hover:text-myOrange-50 transition-colors" 
+                            to={`/anime/details/${version.mal_id}`}>
+                              {version.name}
+                            </Link>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </>
+                }
+
+                {
+                  additional.length > 0 &&
+                  <>
+                    <h5 className="text-blue-100 text-[18px] font-bold font-mulish">Additional</h5>
+                    <ul>
+                      {
+                        additional.map(item => 
+                          <li key={item.mal_id}>
+                            <Link className="font-mulish dark:text-white dark:hover:text-myOrange-50 hover:text-myOrange-50 transition-colors" 
+                            to={`/anime/details/${item.mal_id}`}>
+                              {item.name}
+                            </Link>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  </>
+                }
                 </div>
                 {
                   props.anime.trailer.embed_url && 

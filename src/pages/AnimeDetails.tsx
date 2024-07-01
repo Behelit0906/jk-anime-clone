@@ -8,6 +8,7 @@ import AnimeDetailCard from "../components/AnimeDetailComponents/AnimeDetailCard
 import CharacterType from "../types/CharacterType";
 import ChapterCard from "../components/AnimeDetailComponents/ChapterCard";
 import useSWR from 'swr';
+import RelationsType from "../types/RelationsType";
 
 function AnimeDetails() {
   const [groupsOfEpisodes, setGroupOfEpisodes] = useState<number[]>([]);
@@ -22,8 +23,10 @@ function AnimeDetails() {
   const chapterTable = useRef<HTMLDivElement>(null);
 
   const { data } = useSWR(`${apiUrl}/anime/${id}`);
+  const { data:relations } = useSWR(`${apiUrl}/anime/${id}/relations`)
 
   const anime:AnimeType = data?.data || null;
+  const relation:RelationsType[] = relations?.data || [];
 
   useEffect(() => {
     if(!Number.isInteger(Number(id))) navigate('/')
@@ -118,6 +121,7 @@ function AnimeDetails() {
             viewed={viewed}
             genres={generateStudioAndGenreStrings(anime.genres)}
             studios={generateStudioAndGenreStrings(anime.studios)}
+            relations={relation}
           />
         }
         {
@@ -129,6 +133,7 @@ function AnimeDetails() {
             viewed={viewed}
             genres={generateStudioAndGenreStrings(anime.genres)}
             studios={generateStudioAndGenreStrings(anime.studios)}
+            relations={relation}
           />
         }
         <section className="mt-5">
