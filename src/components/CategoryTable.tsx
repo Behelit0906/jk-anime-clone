@@ -12,7 +12,7 @@ function CategoryTable() {
             <li className="w-2/4" key={key}>
               <Link 
                 className="block w-full py-[5px] px-[10px] hover:text-myOrange-50 hover:pl-[15px] transition-all duration-300 ease-in-out" 
-                to={`/genre/${genre.mal_id}`}>
+                to={`/anime-by-genre?genre=${genre.urlName}&page=1`}>
                 {genre.name}
               </Link>
             </li>

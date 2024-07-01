@@ -1,52 +1,65 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import Layout from "./Layout";
-import { apiUrl } from "../constants";
+import { apiUrl, genres } from "../constants";
 import AnimeType from "../types/AnimeType";
+import useSWR from "swr";
 import AddAnimeCard from "../components/AddAnimeCard";
-import { genres } from "../constants";
 
+
+function genreExist(urlName:string | null) {
+  const genre = {"mal_id": 0, "name": "Genre", urlName: ""};
+  if(urlName === '') return genre;
+
+  for(let i = 0; i < genres.length; i++) {
+    if(genres[i].urlName === urlName){
+      genre.mal_id = genres[i].mal_id;
+      genre.name = genres[i].name;
+      genre.urlName = genres[i].urlName;
+    }
+  }
+  return genre;
+}
 
 function Genre () {
-  const [animes, setAnimes] = useState<AnimeType[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const { id } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
+  const genre = genreExist(searchParams.get('genre'));
+  const pageQuery = Number(searchParams.get('page')) || 1;
+  const [page, setPage] = useState(pageQuery);
 
-  const genre = genres.find(genre => genre.mal_id === Number(id));
+
+  const { data } = useSWR(`${apiUrl}/anime?genres=${genre.mal_id}&limit=24&page=${pageQuery}&sfw=true`)
+
+  const animes: AnimeType[] = data?.data || [];
+  const totalPages = data?.pagination.last_visible_page || 0;
+
 
   useEffect(() => {
-    if(!Number.isInteger(Number(id))) navigate('/')
-  }, [id, navigate])
+    if(genre.mal_id === 0) navigate('/')
+  }, [genre, navigate])
 
   useEffect(() => {
-    async function getAnimes() {
-      const response = await fetch(`${apiUrl}/anime?sfw&genres=${id}&limit=24&page=${page}`).then(res => res.json());
+    setPage(pageQuery);
+  }, [pageQuery])
 
-      if(response){
-        setAnimes(response.data);
-        setTotalPages(response.pagination.last_visible_page);
-      } 
-      else {
-        setAnimes([]);
-        setTotalPages(0)
-      } 
-    }
-
-    getAnimes();
-  }, [id, page]);
 
   function clickHandler(e:React.MouseEvent<HTMLButtonElement>) {
-    if(e.currentTarget.name === 'previousButton') setPage(page - 1);
-    else setPage(page + 1);
+    const temp = page
+    if(e.currentTarget.name === 'previousButton') {
+      navigate(`/anime-by-genre?genre=${genre.urlName}&page=${temp - 1}`)
+    }
+    else {
+      navigate(`/anime-by-genre?genre=${genre.urlName}&page=${temp + 1}`)
+    }
   }
   
   return (
     <Layout>
       <section className="w-full py-[60px] cl-2:w-[540px] md:w-[720px] lg:w-[960px] xl:w-[1170px] px-[15px]">
         <h4 className="font-oswald leading-[21px] text-[#212529] dark:text-white text-2xl pl-[20px] border-l-4 border-myOrange-50 mb-10">
-          {genre?.name.toUpperCase()} GENRE
+          {genre.name.toUpperCase()} GENRE
         </h4>
         <div className="flex flex-wrap justify-between lg:justify-between gap-4">
           {
