@@ -10,10 +10,10 @@ interface Props {
 
 function SearchList(props: Props) {
   return (
-    <article className="absolute z-20 top-14 w-full lg:w-[204px] xl:w-[274px] rounded bg-white font-mulish shadow">
+    <article className="absolute z-20 top-14 w-full lg:w-[204px] xl:w-[274px] rounded bg-white font-mulish shadow dark:bg-dark-100">
       {
         props.isLoading ? (
-          <p className="pb-7 pt-3 text-center font-mulish text-[#3d3d3d]">Loading...</p>
+          <p className="pb-7 pt-3 text-center font-mulish text-[#3d3d3d] dark:text-white">Loading...</p>
         ) : props.animes && props.animes.length > 0 ? (
           <ul>
             {
@@ -28,12 +28,12 @@ function SearchList(props: Props) {
                 </li>  
               )
             }
-            <Link className="w-full block p-[10px] rounded text-center bg-gray-100 font-bold text-base" to={`/search?q=${props.query}&page=1`}>
+            <Link className="w-full block p-[10px] rounded text-center bg-gray-100 dark:bg-dark-150 hover:bg-gray-300 hover:dark:bg-dark-200 dark:text-white font-bold text-base" to={`/search?q=${props.query}&page=1`}>
                 More results
             </Link>
           </ul>
         ) : (
-          <p className="pb-7 pt-3 text-center font-mulish text-[#3d3d3d]">No results found.</p>
+          <p className="pb-7 pt-3 text-center font-mulish text-[#3d3d3d] dark:text-white">No results found.</p>
         )
       }
     </article>
