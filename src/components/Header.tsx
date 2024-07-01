@@ -22,15 +22,25 @@ function Header() {
   }
 
   useEffect(() => {
-
+    let windowWidth = window.innerWidth;
+  
     function resizeHandler() {
-      setIsMenuVisible(false);
+      const newWindowWidth = window.innerWidth;
+      if (newWindowWidth !== windowWidth) {
+        windowWidth = newWindowWidth;
+        setIsMenuVisible(false);
+      }
     }
-
+  
     window.addEventListener("resize", resizeHandler);
-
-    return () => window.removeEventListener("resize", resizeHandler);
-  }, [])
+    window.addEventListener("orientationchange", resizeHandler);
+  
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+      window.removeEventListener("orientationchange", resizeHandler);
+    };
+  }, []);
+  
 
   useEffect(() => {
     setIsMenuVisible(false);
