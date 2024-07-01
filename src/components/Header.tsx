@@ -23,24 +23,30 @@ function Header() {
 
   useEffect(() => {
     let windowWidth = window.innerWidth;
-  
     function resizeHandler() {
       const newWindowWidth = window.innerWidth;
       if (newWindowWidth !== windowWidth) {
         windowWidth = newWindowWidth;
         setIsMenuVisible(false);
+        
       }
     }
   
     window.addEventListener("resize", resizeHandler);
     window.addEventListener("orientationchange", resizeHandler);
-  
     return () => {
       window.removeEventListener("resize", resizeHandler);
       window.removeEventListener("orientationchange", resizeHandler);
+
     };
   }, []);
   
+
+  useEffect(() => {
+    if(isMenuVisible)
+      window.document.body.classList.add('overflow-hidden');
+    else window.document.body.classList.remove('overflow-hidden')
+  }, [isMenuVisible])
 
   useEffect(() => {
     setIsMenuVisible(false);
