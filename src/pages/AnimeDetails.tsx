@@ -1,6 +1,6 @@
 import Layout from "./Layout";
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { apiUrl } from "../constants";
 import AnimeType from "../types/AnimeType";
 import MobileAnimeDetailCard from "../components/AnimeDetailComponents/MobileAnimeDetailCard";
@@ -13,20 +13,17 @@ import RelationsType from "../types/RelationsType";
 function AnimeDetails() {
   const [groupsOfEpisodes, setGroupOfEpisodes] = useState<number[]>([]);
   const [chaptersToRender, setChaptersToRender] = useState<number[]>([]);
-  const [characters, setCharacters] = useState<CharacterType[]>();
+  const [switcher, setSwitcher ] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const characterButton = useRef<HTMLButtonElement>(null);
-  const chapterButton = useRef<HTMLButtonElement>(null);
-  const characterTable = useRef<HTMLDivElement>(null);
-  const chapterTable = useRef<HTMLDivElement>(null);
-
   const { data } = useSWR(`${apiUrl}/anime/${id}`);
   const { data:relations } = useSWR(`${apiUrl}/anime/${id}/relations`)
+  const { data:charact } = useSWR(`${apiUrl}/anime/${id}/characters`)
 
   const anime:AnimeType = data?.data || null;
   const relation:RelationsType[] = relations?.data || [];
+  const characters:CharacterType[] = charact?.data || [];
 
   useEffect(() => {
     if(!Number.isInteger(Number(id))) navigate('/')
@@ -51,16 +48,6 @@ function AnimeDetails() {
   }, [anime])
 
   useEffect(() => {
-    async function getAnimeCharacters() {
-      const response = await fetch(`${apiUrl}/anime/${id}/characters`).then(res => res.json());
-
-      if(response) setCharacters(response.data);
-    }
-
-    getAnimeCharacters();
-  }, [id])
-
-  useEffect(() => {
     if(anime) {
       const temp = [];
       if(anime.episodes < 13) 
@@ -80,21 +67,18 @@ function AnimeDetails() {
     return Math.floor(Math.random() * 101);
   }
 
-  const toView = generateRandomNumber();
-  const viewed = generateRandomNumber();
-  const peopleWatching = generateRandomNumber();
+  const toView = useMemo(() => generateRandomNumber(), []);
+  const viewed = useMemo(() => generateRandomNumber(), []);
+  const peopleWatching = useMemo(() => generateRandomNumber(), []);
 
+  
   function generateStudioAndGenreStrings(items: {name:string}[]) {
     return items.map(item => item.name).join(', ')
   }
 
-  function clickHandler() {
-    characterButton.current?.classList.toggle('bg-blue-50');
-    characterButton.current?.classList.toggle('text-white');
-    chapterButton.current?.classList.toggle('bg-blue-50');
-    chapterButton.current?.classList.toggle('text-white');
-    characterTable.current?.classList.toggle('hidden');
-    chapterTable.current?.classList.toggle('hidden');
+  function clickHandler(e:React.MouseEvent) {
+    if(e.currentTarget.id === 'chapters' && switcher) setSwitcher(false);
+    else if(e.currentTarget.id === 'characters' && !switcher) setSwitcher(true);
   }
 
   function chaptersHandler(e:React.MouseEvent<HTMLLIElement>) {
@@ -138,12 +122,12 @@ function AnimeDetails() {
         }
         <section className="mt-5">
           <div className="flex bg-white font-mulish rounded overflow-hidden mb-4">
-            <button onClick={clickHandler} ref={chapterButton} id="chapters" className="w-2/4 p-2 bg-blue-50 text-white">Chapters</button>
-            <button onClick={clickHandler} ref={characterButton} id="characters" className="w-2/4 p-2">Characters</button>
+            <button onClick={clickHandler} id="chapters" className={`w-2/4 p-2 ${!switcher ? 'bg-blue-50 text-white' : ''}`}>Chapters</button>
+            <button onClick={clickHandler} id="characters" className={`w-2/4 p-2 ${switcher ? 'bg-blue-50 text-white' : ''}`}>Characters</button>
           </div>
-          <div className="hidden" ref={characterTable}>
+          <div className={`${!switcher ? 'hidden' : ''}`}>
             {
-              characters ?  
+              characters?.length > 0 ?  
               <ul className="flex flex-wrap gap-y-6 justify-between lg:justify-start lg:gap-6 xl:gap-[30px] font-mulish">
                 {
                   characters.map((character, key) => 
@@ -155,13 +139,14 @@ function AnimeDetails() {
                   ) 
                 }
               </ul>
-              : <p className="font-mulish dark:text-white">Sorry, we don't have the characters of this anime yet. Please be patient.</p>
+              : <p className="font-mulish dark:text-white">Sorry, we don't have the characters of this anime yet. Please be patient</p>
             }
           </div>
+          <div className={`${switcher ? 'hidden' : ''}`}>
           {
             anime?.episodes ? 
-            <div ref={chapterTable}>
-              <ul className="flex flex-wrap gap-y-7 justify-between lg:justify-start lg:gap-x-[30px] mb-6">
+            <>
+            <ul className="flex flex-wrap gap-y-7 justify-between lg:justify-start lg:gap-x-[30px] mb-6">
                 {
                   anime && chaptersToRender.map(item =>
                     <ChapterCard 
@@ -188,10 +173,10 @@ function AnimeDetails() {
                   )
                 }
               </ul>
-            </div>
+            </>
             : <p className="font-mulish dark:text-white">Sorry, we don't have the chapters of this anime yet. Please be patient.</p>
           }
-          
+          </div>
         </section>
       </section>
       
