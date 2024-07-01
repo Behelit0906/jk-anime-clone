@@ -26,7 +26,7 @@ const App = () => {
           <Route path="/" Component={Home} />
           <Route path="/directory" Component={Directory} />
           <Route path="/anime-by-letter" Component={Letter} />
-          <Route path="/genre/:id" Component={Genre} />
+          <Route path="/anime-by-genre" Component={Genre} />
           <Route path="/anime/details/:id" Component={AnimeDetails} />
           <Route path="/top" Component={Top} />
           <Route path="/search" Component={Search} />
