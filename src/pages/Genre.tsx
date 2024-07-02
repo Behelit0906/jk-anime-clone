@@ -54,6 +54,10 @@ function Genre () {
       navigate(`/anime-by-genre?genre=${genre.urlName}&page=${temp + 1}`)
     }
   }
+
+  useEffect(() => {
+    document.title = `Watch ${genre.name.toLocaleLowerCase()} anime`
+  }, [genre.name])
   
   return (
     <Layout>

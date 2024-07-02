@@ -38,6 +38,10 @@ function Letter () {
     }
 
   }
+
+  useEffect(() => {
+    document.title = `Watch anime with the letter ${letterQuery}`
+  }, [letterQuery])
  
 
   return (

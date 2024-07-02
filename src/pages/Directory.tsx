@@ -1,7 +1,7 @@
 import Layout from "./Layout";
 import { FaHome } from "react-icons/fa";
 import DirectoryFilter from "../components/DirectoryComponents/DirectoryFilter";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { genres, types, apiUrl } from "../constants";
 import AnimeType from "../types/AnimeType";
 import DirectoryCard from "../components/DirectoryComponents/DirectoryCard";
@@ -84,6 +84,10 @@ function Directory() {
   const animes:AnimeType[] = data?.data || null;
 
   const totalPages = data?.pagination?.last_visible_page;
+
+  useEffect(() => {
+    document.title = 'Directory';
+  }, [])
 
   return (
     <Layout>

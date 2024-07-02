@@ -5,6 +5,7 @@ import SpecialTable from "../components/SpecialTable";
 import TopList from "../components/TopList";
 import TableOfLatestAdditions from "../components/TableOfLatestAdditions";
 import ListOfLatestAdditions from "../components/ListOfLatestAdditions";
+import { useEffect } from "react";
 
 function Home() {
 
@@ -35,6 +36,10 @@ function Home() {
       id: 54900
     },
   ]
+
+  useEffect(() => {
+    document.title = 'Watch Anime Online - all anime for free'
+  }, [])
   return (
     <Layout>
       <div className="w-full pt-[50px] cl-2:w-[540px] md:w-[720px] cl-2:px-0 px-[15px] h-full flex flex-col lg:flex-row lg:items-start lg:gap-5 justify-center items-center lg:w-[960px] xl:w-[1170px]">

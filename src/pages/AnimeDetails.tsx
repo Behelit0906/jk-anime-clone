@@ -92,6 +92,9 @@ function AnimeDetails() {
     setChaptersToRender(temp);
   }
   
+  useEffect(() => {
+    if(anime) document.title = anime.title || anime.title_english || anime.title_japanese;
+  }, [anime])
 
   return(
     <Layout>

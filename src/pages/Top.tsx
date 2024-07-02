@@ -125,6 +125,10 @@ function Top () {
     setIsDisabled(true);
   }
 
+  useEffect(() => {
+    document.title = 'Top animes'
+  }, [])
+
   return (
     <Layout>
       <section className="w-full pt-4 pb-[60px] cl-2:w-[540px] md:w-[720px] lg:w-[960px] xl:w-[1170px] px-[15px] font-mulish">
